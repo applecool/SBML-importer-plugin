@@ -366,7 +366,6 @@ public class PeerModel implements PathwayListener
 			pelt = sbr.getSpeciesElement();
 			pelt.setMCenterX(prefX);
 			pelt.setMCenterY(prefY);
-			pelt.setTextLabel(sId);
 			pwy.add(pelt);
 		}
 		return pelt;
