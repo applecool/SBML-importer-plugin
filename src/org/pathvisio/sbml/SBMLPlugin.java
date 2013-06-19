@@ -38,6 +38,11 @@ public class SBMLPlugin implements Plugin
 		// save the desktop reference so we can use it later
 		this.desktop = desktop;
 		
+		// new side panel
+		JPanel mySideBarPanel = new JPanel();
+		JTabbedPane sidebarTabbedPane = desktop.getSideBarTabbedPane();
+		sidebarTabbedPane.add("SBML", mySideBarPanel);
+		
 		// register importer / exporter
 		SBMLFormat sbmlFormat = new SBMLFormat(this);		
 		desktop.getSwingEngine().getEngine().addPathwayExporter(sbmlFormat);
