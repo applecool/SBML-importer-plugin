@@ -58,6 +58,26 @@ public class SBMLPlugin implements Plugin
 				.addToToolbar(toolbarAction);
 	}
 
+	private final MyToolbarAction toolbarAction = new MyToolbarAction();
+	
+	private class MyToolbarAction extends AbstractAction {
+
+		MyToolbarAction() {
+			putValue(NAME, "Validate");
+		}
+	@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			ValidatePanel sv = new ValidatePanel();
+			JDialog d = new JDialog(desktop.getFrame(), "Validate");
+			d.getContentPane().add(sv);
+			d.pack();
+			d.setSize(500, 500);
+			d.setVisible(true);
+
+		}
+
+	}
 	public void done() {}
 	
 	private class SbmlTreeAction extends AbstractAction
