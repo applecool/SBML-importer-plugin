@@ -17,9 +17,10 @@
 package org.pathvisio.sbml;
 
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
-
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import org.pathvisio.desktop.PvDesktop;
 import org.pathvisio.desktop.plugin.Plugin;
 import org.sbml.jsbml.SBMLDocument;
@@ -51,6 +52,10 @@ public class SBMLPlugin implements Plugin
 		sbmlTreeAction = new SbmlTreeAction();
 		sbmlTreeAction.setEnabled(false);
 		desktop.registerMenuAction("File", sbmlTreeAction);
+		
+		// add our action (defined below) to the toolbar
+		desktop.getSwingEngine().getApplicationPanel()
+				.addToToolbar(toolbarAction);
 	}
 
 	public void done() {}
