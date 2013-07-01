@@ -52,6 +52,8 @@ public class SBMLPlugin implements Plugin
 				DocumentPanel pane = new DocumentPanel(desktop.getSwingEngine());
 		JTabbedPane sidebarTabbedPane = desktop.getSideBarTabbedPane();
 		sidebarTabbedPane.add("SBML", pane);
+		
+		desktop.getSwingEngine().getEngine().addApplicationEventListener(pane);
 	}
 
 	private final MyToolbarAction toolbarAction = new MyToolbarAction();
