@@ -31,7 +31,7 @@ import org.sbml.jsbml.SBMLDocument;
 public class SBMLPlugin implements Plugin
 {
 	private PvDesktop desktop;
-	private SbmlTreeAction sbmlTreeAction;
+	
 	private SBMLDocument lastImported = null;
 	
 	public void init(PvDesktop desktop) 
@@ -49,9 +49,6 @@ public class SBMLPlugin implements Plugin
 		desktop.getSwingEngine().getEngine().addPathwayExporter(sbmlFormat);
 		desktop.getSwingEngine().getEngine().addPathwayImporter(sbmlFormat);
 		
-		sbmlTreeAction = new SbmlTreeAction();
-		sbmlTreeAction.setEnabled(false);
-		desktop.registerMenuAction("File", sbmlTreeAction);
 		
 		// add our action (defined below) to the toolbar
 		desktop.getSwingEngine().getApplicationPanel()
@@ -68,9 +65,9 @@ public class SBMLPlugin implements Plugin
 	@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			ValidatePanel sv = new ValidatePanel();
+			ValidatePanel vp = new ValidatePanel();
 			JDialog d = new JDialog(desktop.getFrame(), "Validate");
-			d.getContentPane().add(sv);
+			d.getContentPane().add(vp);
 			d.pack();
 			d.setVisible(true);
 
@@ -79,27 +76,9 @@ public class SBMLPlugin implements Plugin
 	}
 	public void done() {}
 	
-	private class SbmlTreeAction extends AbstractAction
-	{
-		SbmlTreeAction()
-		{
-			super ("View SBML document");
-		}
-		
-		@Override
-		public void actionPerformed(ActionEvent arg0)
-		{
-			if (lastImported != null)
-			{
-				JSBMLvisualizer vis = new JSBMLvisualizer(lastImported);
-				vis.createAndShow(desktop.getFrame());
-			}
-		}
-	}
 
 	public void setLastImported(SBMLDocument document)
 	{
 		lastImported = document;
-		sbmlTreeAction.setEnabled(true);
 	}
 }
