@@ -28,42 +28,43 @@ import org.sbml.jsbml.SBMLDocument;
 /**
  * SBML importer and exporter
  */
-public class SBMLPlugin implements Plugin
-{
+public class SBMLPlugin implements Plugin {
 	private PvDesktop desktop;
-	
+
 	private SBMLDocument lastImported = null;
-	
-	public void init(PvDesktop desktop) 
-	{
+	JPanel mySideBarPanel;
+
+	public void init(PvDesktop desktop) {
 		// save the desktop reference so we can use it later
 		this.desktop = desktop;
-		
+
 		// register importer / exporter
-		SBMLFormat sbmlFormat = new SBMLFormat(this);		
+		SBMLFormat sbmlFormat = new SBMLFormat(this);
 		desktop.getSwingEngine().getEngine().addPathwayExporter(sbmlFormat);
 		desktop.getSwingEngine().getEngine().addPathwayImporter(sbmlFormat);
-		
-		
+
 		// add our action (defined below) to the toolbar
 		desktop.getSwingEngine().getApplicationPanel()
 				.addToToolbar(toolbarAction);
-			// add new SBML side pane	
-				DocumentPanel pane = new DocumentPanel(desktop.getSwingEngine());
+
+		// add new SBML side pane
+		DocumentPanel pane = new DocumentPanel(desktop.getSwingEngine());
 		JTabbedPane sidebarTabbedPane = desktop.getSideBarTabbedPane();
 		sidebarTabbedPane.add("SBML", pane);
 		// add functionality to the pane
 		desktop.getSwingEngine().getEngine().addApplicationEventListener(pane);
+
 	}
 
 	private final MyToolbarAction toolbarAction = new MyToolbarAction();
-	
+
 	private class MyToolbarAction extends AbstractAction {
 
 		MyToolbarAction() {
 			putValue(NAME, "Validate");
 		}
-	@Override
+
+		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			ValidatePanel vp = new ValidatePanel();
@@ -75,11 +76,13 @@ public class SBMLPlugin implements Plugin
 		}
 
 	}
-	public void done() {}
-	
 
-	public void setLastImported(SBMLDocument document)
-	{
-		lastImported = document;
+	public void done() {
 	}
+
+	public void setLastImported(SBMLDocument document) {
+		lastImported = document;
+
+	}
+
 }
