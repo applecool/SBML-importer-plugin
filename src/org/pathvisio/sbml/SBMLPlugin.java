@@ -72,7 +72,6 @@ public class SBMLPlugin implements Plugin
 			JDialog d = new JDialog(desktop.getFrame(), "Validate");
 			d.getContentPane().add(sv);
 			d.pack();
-			d.setSize(500, 500);
 			d.setVisible(true);
 
 		}
