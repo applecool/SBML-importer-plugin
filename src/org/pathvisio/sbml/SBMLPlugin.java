@@ -48,6 +48,10 @@ public class SBMLPlugin implements Plugin
 		// add our action (defined below) to the toolbar
 		desktop.getSwingEngine().getApplicationPanel()
 				.addToToolbar(toolbarAction);
+				
+				DocumentPanel pane = new DocumentPanel(desktop.getSwingEngine());
+		JTabbedPane sidebarTabbedPane = desktop.getSideBarTabbedPane();
+		sidebarTabbedPane.add("SBML", pane);
 	}
 
 	private final MyToolbarAction toolbarAction = new MyToolbarAction();
