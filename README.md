@@ -2,7 +2,18 @@ SBML-importer-plugin
 ====================
 SBML importer Plugin for PathVisio allow researchers to visualize and overlay data on the same pathway models which they use in simulation experiments.
 It provides a better visualization of the models and layouts in SBML and an export feature which enables the user to export the models and layouts in SBML format.
+
+Currently the development of the plugin is in progress.Right now, the plugin does the following:
+- Importing an SBML file into the pathvisio editor.
+- Viewing the elements of an imported SBML model.
+
+The jar file of the SBML plugin can be downloaded from the following link:
+https://www.box.com/s/4pt8duczvhptl8qxsfmu
+
+Note: SBML plugin depends on SBGN. Hence while installing the plugin in the Pathvisio Editor from the local machine through the plugin manager, First install the SBGN plugin and then install the SBML plugin.  
+
 Refer: http://test.pathvisio.org/sbml2gpml/blog/
 
-Contact: kmitharsha@gmail.com
+Contact: Anwesha Bohler: pennatula@gmail.com 
+		 Sri Harsha    : kmitharsha@gmail.com
  
