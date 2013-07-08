@@ -46,7 +46,7 @@ public class ValidatePanel extends JPanel implements ActionListener {
 		fc.setFileFilter(filter);
 		textArea = new JTextArea();
 
-		textArea.setEnabled(false);
+		textArea.setEditable(false);
 		JScrollPane areaPane = new JScrollPane(textArea);
 		areaPane.setPreferredSize(new Dimension(300, 300));
 		areaPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
