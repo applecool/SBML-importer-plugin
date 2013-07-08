@@ -25,6 +25,7 @@ import org.pathvisio.core.util.RootElementFinder;
 
 public class SBMLFormat extends AbstractPathwayFormat
 {
+	public static SBMLDocument doc;
 	private final SBMLPlugin parent;
 	
 	/** @param parent may be null */
