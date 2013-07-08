@@ -24,11 +24,12 @@ import org.sbml.jsbml.SBMLDocument;
 import org.sbml.jsbml.SBMLReader;
 
 public class ValidatePanel extends JPanel implements ActionListener {
-	
+
 	JFileChooser fc;
 	JButton openButton;
 	JButton validateButton;
 	static JTextArea textArea;
+
 	final JLabel statusbar = new JLabel(
 			"Output of your selection will appear here", SwingConstants.RIGHT);
 	static String filename;
@@ -44,10 +45,13 @@ public class ValidatePanel extends JPanel implements ActionListener {
 				"xml");
 		fc.setFileFilter(filter);
 		textArea = new JTextArea();
-		//textArea.setEnabled(false);
+
+		textArea.setEnabled(false);
 		JScrollPane areaPane = new JScrollPane(textArea);
-		areaPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		areaPane.setPreferredSize(new Dimension(250, 250));
+		areaPane.setPreferredSize(new Dimension(300, 300));
+		areaPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		areaPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
 		openButton = new JButton("Open");
 		validateButton = new JButton("Validate the file");
 		openButton.addActionListener(this);
@@ -83,7 +87,7 @@ public class ValidatePanel extends JPanel implements ActionListener {
 		outputPanel.setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createTitledBorder("Output Pane"),
 				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-		outputPanel.add(textArea);
+		outputPanel.add(areaPane);
 		add(outputPanel, BorderLayout.SOUTH);
 	}
 
@@ -140,6 +144,7 @@ public class ValidatePanel extends JPanel implements ActionListener {
 		} else {
 			long errors = document.checkConsistency();
 			long s = document.getErrorLog().getErrorCount();
+			print(document.getErrorLog().toString());
 			System.out.println(s);
 			long size = new File(selectFile).length();
 
@@ -150,16 +155,24 @@ public class ValidatePanel extends JPanel implements ActionListener {
 
 			if (errors > 0) {
 				document.printErrors(System.out);
-				System.exit(1);
+
+			}
+			for (int i = 0; i < errors; i++) {
+				print(document.getError(i).toString());
+
 			}
 		}
 	}
 
 	static void print(String msg) {
 		System.out.println(msg);
+		textArea.setText(msg);
+
 	}
 
 	static void println(String msg) {
 		System.out.println(msg);
+		textArea.setText(msg);
+
 	}
 }
