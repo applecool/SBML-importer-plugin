@@ -48,7 +48,7 @@ public class ValidatePanel extends JPanel implements ActionListener {
 
 		textArea.setEditable(false);
 		JScrollPane areaPane = new JScrollPane(textArea);
-		areaPane.setPreferredSize(new Dimension(300, 300));
+		areaPane.setPreferredSize(new Dimension(500, 400));
 		areaPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		areaPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
