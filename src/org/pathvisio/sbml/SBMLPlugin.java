@@ -21,6 +21,8 @@ import javax.swing.AbstractAction;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+
+import org.pathvisio.core.preferences.Preference;
 import org.pathvisio.desktop.PvDesktop;
 import org.pathvisio.desktop.plugin.Plugin;
 import org.sbml.jsbml.SBMLDocument;
@@ -46,6 +48,8 @@ public class SBMLPlugin implements Plugin {
 		// add our action (defined below) to the toolbar
 		desktop.getSwingEngine().getApplicationPanel()
 				.addToToolbar(toolbarAction);
+		desktop.getSwingEngine().getApplicationPanel()
+		.addToToolbar(toolbarAction2);
 
 		// add new SBML side pane
 		DocumentPanel pane = new DocumentPanel(desktop.getSwingEngine());
@@ -57,6 +61,7 @@ public class SBMLPlugin implements Plugin {
 	}
 
 	private final MyToolbarAction toolbarAction = new MyToolbarAction();
+	private final MyToolbarAction2 toolbarAction2 = new MyToolbarAction2();
 
 	private class MyToolbarAction extends AbstractAction {
 
@@ -75,6 +80,36 @@ public class SBMLPlugin implements Plugin {
 
 		}
 
+	}
+	private class MyToolbarAction2 extends AbstractAction {
+
+		MyToolbarAction2() {
+			putValue(NAME, "ForceDirectedLayout");
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			new FruchtRein(desktop.getSwingEngine());
+
+		}
+
+	}
+	public static enum PlPreference implements Preference
+	{
+		PL_LAYOUT_FR_ATTRACTION("0.5"),
+		PL_LAYOUT_FR_REPULSION("1"),
+		PL_LAYOUT_SPRING_FORCE("0.33"),
+		PL_LAYOUT_SPRING_REPULSION("100"),
+		PL_LAYOUT_SPRING_STRETCH("0.7");
+		
+	
+		private final String defaultVal;
+		
+		PlPreference (String _defaultVal) { defaultVal = _defaultVal; }
+		
+		@Override
+		public String getDefault() { return defaultVal; }
 	}
 
 	public void done() {
