@@ -8,7 +8,7 @@ Currently the development of the plugin is in progress.Right now, the plugin doe
 - Viewing the elements of an imported SBML model.
 
 The jar file of the SBML plugin can be downloaded from the following link:
-https://www.box.com/s/4pt8duczvhptl8qxsfmu
+https://app.box.com/s/4pt8duczvhptl8qxsfmu
 
 Note: SBML plugin depends on SBGN. Hence while installing the plugin in the Pathvisio Editor from the local machine through the plugin manager, first install the SBGN plugin (Plugins -> Plugin Manager)and then install the SBML plugin following the steps below:
 
