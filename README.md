@@ -19,7 +19,7 @@ Note: SBML plugin depends on SBGN. Hence while installing the plugin in the Path
 * Select the checkbox next to SBML.jar
 * Click OK
 
-Refer: http://test.pathvisio.org/sbml2gpml/blog/
+Refer: http://plugins.pathvisio.org/sbml2gpml/blog/
 
 Contact: Anwesha Bohler: pennatula@gmail.com 
 		 Sri Harsha    : kmitharsha@gmail.com
