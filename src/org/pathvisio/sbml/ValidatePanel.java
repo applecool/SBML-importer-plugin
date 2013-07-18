@@ -144,7 +144,7 @@ public class ValidatePanel extends JPanel implements ActionListener {
 		} else {
 			long errors = document.checkConsistency();
 			long s = document.getErrorLog().getErrorCount();
-			textArea.append(document.getErrorLog().toString());
+			
 			long size = new File(selectFile).length();
 			
 			textArea.setText("            filename: " + selectFile + "\n");
