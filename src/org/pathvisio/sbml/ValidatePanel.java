@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -23,6 +22,7 @@ import javax.xml.stream.XMLStreamException;
 
 import org.sbml.jsbml.SBMLDocument;
 import org.sbml.jsbml.SBMLReader;
+
 public class ValidatePanel extends JPanel implements ActionListener {
 
 	JFileChooser fc;
@@ -44,8 +44,8 @@ public class ValidatePanel extends JPanel implements ActionListener {
 				"SBML(Systems Biology Markup Language) (.sbml,.xml)", "sbml",
 				"xml");
 		fc.setFileFilter(filter);
-		textArea = new JTextArea();
 
+		textArea = new JTextArea();
 		textArea.setEditable(false);
 		JScrollPane areaPane = new JScrollPane(textArea);
 		areaPane.setPreferredSize(new Dimension(500, 400));
@@ -122,9 +122,8 @@ public class ValidatePanel extends JPanel implements ActionListener {
 		System.out.println("the file is " + selectFile);
 		SBMLReader reader = new SBMLReader();
 		SBMLDocument document = null;
-		
+
 		long start, stop;
-		
 		start = System.currentTimeMillis();
 		try {
 			document = reader.readSBML(selectFile);
@@ -141,35 +140,33 @@ public class ValidatePanel extends JPanel implements ActionListener {
 			textArea.setText("Encountered the following errors while reading the SBML file:\n");
 			document.printErrors(System.out);
 			textArea.append("\nFurther consistency checking and validation aborted.\n");
-			
+
 		} else {
 			long errors = document.checkConsistency();
-			
 			long size = new File(selectFile).length();
-			
+
 			textArea.setText("File Information: \n");
 			textArea.append("            filename: " + selectFile + "\n");
-			textArea.append("           file size: " + size+ "\n");
-			textArea.append("      read time (ms): " + (stop - start)+ "\n");
-			textArea.append(" validation error(s): " + errors+ "\n");
+			textArea.append("           file size: " + size + "\n");
+			textArea.append("      read time (ms): " + (stop - start) + "\n");
+			textArea.append(" validation error(s): " + errors + "\n");
 
 			if (errors > 0) {
 				textArea.append("\nFollowing errors were encountered while reading the SBML File:\n");
-				
-				for (int i = 0; i < errors; i++) {
-				String validationError = document.getError(i).toString();
-				
-				String[] str1 = validationError.split("excerpt",2);
-				String[] str2 = validationError.split("message",2);
-				textArea.append(str1[0]);
-				textArea.append("Message"+str2[1]);
 
+				for (int i = 0; i < errors; i++) {
+					String validationError = document.getError(i).toString();
+
+					String[] str1 = validationError.split("excerpt", 2);
+					String[] str2 = validationError.split("message", 2);
+					textArea.append(str1[0]);
+					textArea.append("Message" + str2[1]);
+
+				}
+			} else {
+				textArea.append("There are no errors in the file");
 			}
-		}else{
-			textArea.append("There are no errors in the file");
-		}
 		}
 	}
 
-	
 }
