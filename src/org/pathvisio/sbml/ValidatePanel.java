@@ -28,7 +28,7 @@ public class ValidatePanel extends JPanel implements ActionListener {
 	JFileChooser fc;
 	JButton openButton;
 	JButton validateButton;
-	static JTextArea textArea;
+	JTextArea textArea;
 
 	final JLabel statusbar = new JLabel(
 			"Output of your selection will appear here", SwingConstants.RIGHT);
@@ -137,42 +137,32 @@ public class ValidatePanel extends JPanel implements ActionListener {
 		stop = System.currentTimeMillis();
 
 		if (document.getErrorCount() > 0) {
-			print("Encountered the following errors while reading the SBML file:\n");
+			textArea.setText("Encountered the following errors while reading the SBML file:\n");
 			document.printErrors(System.out);
-			print("\nFurther consistency checking and validation aborted.\n");
-			System.exit(1);
+			textArea.append("\nFurther consistency checking and validation aborted.\n");
+			
 		} else {
 			long errors = document.checkConsistency();
 			long s = document.getErrorLog().getErrorCount();
-			print(document.getErrorLog().toString());
-			System.out.println(s);
+			textArea.append(document.getErrorLog().toString());
 			long size = new File(selectFile).length();
-
-			println("            filename: " + selectFile);
-			println("           file size: " + size);
-			println("      read time (ms): " + (stop - start));
-			println(" validation error(s): " + errors);
+			
+			textArea.setText("            filename: " + selectFile);
+			textArea.append("           file size: " + size);
+			textArea.append("      read time (ms): " + (stop - start));
+			textArea.append(" validation error(s): " + errors);
 
 			if (errors > 0) {
 				document.printErrors(System.out);
 
 			}
 			for (int i = 0; i < errors; i++) {
-				print(document.getError(i).toString());
+				
+				textArea.append(document.getError(i).toString());
 
 			}
 		}
 	}
 
-	static void print(String msg) {
-		System.out.println(msg);
-		textArea.setText(msg);
-
-	}
-
-	static void println(String msg) {
-		System.out.println(msg);
-		textArea.setText(msg);
-
-	}
+	
 }
