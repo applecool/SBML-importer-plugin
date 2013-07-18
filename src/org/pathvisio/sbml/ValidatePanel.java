@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -22,7 +23,6 @@ import javax.xml.stream.XMLStreamException;
 
 import org.sbml.jsbml.SBMLDocument;
 import org.sbml.jsbml.SBMLReader;
-
 public class ValidatePanel extends JPanel implements ActionListener {
 
 	JFileChooser fc;
@@ -122,8 +122,9 @@ public class ValidatePanel extends JPanel implements ActionListener {
 		System.out.println("the file is " + selectFile);
 		SBMLReader reader = new SBMLReader();
 		SBMLDocument document = null;
+		
 		long start, stop;
-
+		
 		start = System.currentTimeMillis();
 		try {
 			document = reader.readSBML(selectFile);
@@ -143,20 +144,19 @@ public class ValidatePanel extends JPanel implements ActionListener {
 			
 		} else {
 			long errors = document.checkConsistency();
-			long s = document.getErrorLog().getErrorCount();
 			
 			long size = new File(selectFile).length();
 			
-			textArea.setText("            filename: " + selectFile + "\n");
+			textArea.setText("File Information: \n");
+			textArea.append("            filename: " + selectFile + "\n");
 			textArea.append("           file size: " + size+ "\n");
 			textArea.append("      read time (ms): " + (stop - start)+ "\n");
 			textArea.append(" validation error(s): " + errors+ "\n");
 
 			if (errors > 0) {
 				textArea.append("\nFollowing errors were encountered while reading the SBML File:\n");
-
-			}
-			for (int i = 0; i < errors; i++) {
+				
+				for (int i = 0; i < errors; i++) {
 				String validationError = document.getError(i).toString();
 				
 				String[] str1 = validationError.split("excerpt",2);
@@ -165,6 +165,9 @@ public class ValidatePanel extends JPanel implements ActionListener {
 				textArea.append("Message"+str2[1]);
 
 			}
+		}else{
+			textArea.append("There are no errors in the file");
+		}
 		}
 	}
 
