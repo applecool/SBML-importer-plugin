@@ -147,13 +147,12 @@ public class ValidatePanel extends JPanel implements ActionListener {
 			textArea.append(document.getErrorLog().toString());
 			long size = new File(selectFile).length();
 			
-			textArea.setText("            filename: " + selectFile);
-			textArea.append("           file size: " + size);
-			textArea.append("      read time (ms): " + (stop - start));
-			textArea.append(" validation error(s): " + errors);
-
+			textArea.setText("            filename: " + selectFile + "\n");
+			textArea.append("           file size: " + size+ "\n");
+			textArea.append("      read time (ms): " + (stop - start)+ "\n");
+			textArea.append(" validation error(s): " + errors+ "\n");
 			if (errors > 0) {
-				document.printErrors(System.out);
+				textArea.append("\nEncountered the following errors while reading the SBML File\n");
 
 			}
 			for (int i = 0; i < errors; i++) {
