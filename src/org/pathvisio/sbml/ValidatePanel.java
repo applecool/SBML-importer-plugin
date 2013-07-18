@@ -152,7 +152,7 @@ public class ValidatePanel extends JPanel implements ActionListener {
 			textArea.append("      read time (ms): " + (stop - start)+ "\n");
 			textArea.append(" validation error(s): " + errors+ "\n");
 			if (errors > 0) {
-				textArea.append("\nEncountered the following errors while reading the SBML File\n");
+				textArea.append("\nFollowing errors were encountered while reading the SBML File\n");
 
 			}
 			for (int i = 0; i < errors; i++) {
