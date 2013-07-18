@@ -1,40 +1,39 @@
 <?xml version="1.0"?>
 <project name="SBML" default="jar" basedir=".">
 
-  <property name="pathvisio.dir" value="../.."/>
-  <property name="org.pathvisio.sbgn.dir" value="../org.pathvisio.sbgn"/>
-  <property name="common.bundles" value="../common-bundles"/>
+	<property name="pathvisio.dir" value="../.." />
+	<property name="org.pathvisio.sbgn.dir" value="../org.pathvisio.sbgn" />
+	<property name="common.bundles" value="../common-bundles" />
 
 	<!-- embedded jars are embedded in the resulting bundle -->
 	<path id="embed.jars">
 		<fileset dir="lib">
-			<include name="jsbml-*-with-dependencies.jar"/>
-			<include name="jsbml-layout-*.jar"/>
-			<include name="jsbml-qual-*.jar"/>
+			<include name="*.jar" />
 		</fileset>
+
 	</path>
 
-  	<path id="project.class.path">
+	<path id="project.class.path">
 		<fileset dir="${pathvisio.dir}/modules">
-			<include name="org.pathvisio.core.jar"/>
-			<include name="org.pathvisio.gui.jar"/>
-			<include name="org.pathvisio.desktop.jar"/>
+			<include name="org.pathvisio.core.jar" />
+			<include name="org.pathvisio.gui.jar" />
+			<include name="org.pathvisio.desktop.jar" />
 		</fileset>
 		<fileset dir="${common.bundles}">
-			<include name="org.sbgn-with-dependencies.jar"/>
-			<include name="com.google.collect*.jar"/>
+			<include name="org.sbgn-with-dependencies.jar" />
+			<include name="com.google.collect*.jar" />
 		</fileset>
 		<fileset dir="${org.pathvisio.sbgn.dir}">
-			<include name="dist/org.pathvisio.sbgn.jar"/>
+			<include name="dist/org.pathvisio.sbgn.jar" />
 		</fileset>
 		<fileset dir="${pathvisio.dir}/lib">
-			<include name="org.bridgedb.jar"/>
-			<include name="felix.jar"/>
-			<include name="com.springsource.org.jdom-1.1.0.jar"/>
-			<include name="org.pathvisio.jgoodies.forms.jar"/>
+			<include name="org.bridgedb.jar" />
+			<include name="felix.jar" />
+			<include name="com.springsource.org.jdom-1.1.0.jar" />
+			<include name="org.pathvisio.jgoodies.forms.jar" />
 		</fileset>
 	</path>
 
-  <import file="${pathvisio.dir}/plugin-common.xml" />
-  
+	<import file="${pathvisio.dir}/plugin-common.xml" />
+
 </project>
