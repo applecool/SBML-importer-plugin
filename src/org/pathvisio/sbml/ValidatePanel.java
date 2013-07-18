@@ -1,6 +1,7 @@
 package org.pathvisio.sbml;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,9 +16,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import javax.xml.stream.XMLStreamException;
 
 import org.sbml.jsbml.SBMLDocument;
@@ -28,8 +32,8 @@ public class ValidatePanel extends JPanel implements ActionListener {
 	JFileChooser fc;
 	JButton openButton;
 	JButton validateButton;
-	JTextArea textArea;
-
+	JTextPane textPane;
+	StyledDocument doc;
 	final JLabel statusbar = new JLabel(
 			"Output of your selection will appear here", SwingConstants.RIGHT);
 	static String filename;
@@ -45,12 +49,14 @@ public class ValidatePanel extends JPanel implements ActionListener {
 				"xml");
 		fc.setFileFilter(filter);
 
-		textArea = new JTextArea();
-		textArea.setEditable(false);
-		JScrollPane areaPane = new JScrollPane(textArea);
-		areaPane.setPreferredSize(new Dimension(500, 400));
-		areaPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		areaPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		textPane = new JTextPane();
+		textPane.setEnabled(true);
+		JScrollPane scrollPane = new JScrollPane(textPane);
+		scrollPane.setPreferredSize(new Dimension(500, 400));
+		scrollPane
+				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane
+				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
 		openButton = new JButton("Open");
 		validateButton = new JButton("Validate the file");
@@ -87,7 +93,7 @@ public class ValidatePanel extends JPanel implements ActionListener {
 		outputPanel.setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createTitledBorder("Output Pane"),
 				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-		outputPanel.add(areaPane);
+		outputPanel.add(scrollPane);
 		add(outputPanel, BorderLayout.SOUTH);
 	}
 
@@ -135,37 +141,51 @@ public class ValidatePanel extends JPanel implements ActionListener {
 			e.printStackTrace();
 		}
 		stop = System.currentTimeMillis();
-
+		textPane.setText("");
 		if (document.getErrorCount() > 0) {
-			textArea.setText("Encountered the following errors while reading the SBML file:\n");
+			textPane.setText("Encountered the following errors while reading the SBML file:\n");
 			document.printErrors(System.out);
-			textArea.append("\nFurther consistency checking and validation aborted.\n");
-
+			textPane.setText("\nFurther consistency checking and validation aborted.\n");
 		} else {
 			long errors = document.checkConsistency();
 			long size = new File(selectFile).length();
-
-			textArea.setText("File Information: \n");
-			textArea.append("            filename: " + selectFile + "\n");
-			textArea.append("           file size: " + size + "\n");
-			textArea.append("      read time (ms): " + (stop - start) + "\n");
-			textArea.append(" validation error(s): " + errors + "\n");
-
+			append("File Information: \n");
+			append("            filename: " + selectFile + "\n");
+			append("           file size: " + size + "\n");
+			append("      read time (ms): " + (stop - start) + "\n");
+			append(" validation error(s): " + errors + "\n");
 			if (errors > 0) {
-				textArea.append("\nFollowing errors were encountered while reading the SBML File:\n");
 
+				append("\nFollowing errors were encountered while reading the SBML File:\n");
 				for (int i = 0; i < errors; i++) {
 					String validationError = document.getError(i).toString();
 
 					String[] str1 = validationError.split("excerpt", 2);
 					String[] str2 = validationError.split("message", 2);
-					textArea.append(str1[0]);
-					textArea.append("Message" + str2[1]);
-
+					append(str1[0]);
+					append(str2[1]);
 				}
 			} else {
-				textArea.append("There are no errors in the file");
+
+				append("There are no errors in the file\n");
 			}
+		}
+
+	}
+
+	public void append(String s) {
+
+		doc = textPane.getStyledDocument();
+		SimpleAttributeSet keyword = new SimpleAttributeSet();
+		StyleConstants.setForeground(keyword, Color.RED);
+		StyleConstants.setBackground(keyword, Color.YELLOW);
+		StyleConstants.setBold(keyword, true);
+		try {
+
+			doc.insertString(doc.getLength(), s, keyword);
+
+		} catch (Exception e) {
+
 		}
 	}
 
