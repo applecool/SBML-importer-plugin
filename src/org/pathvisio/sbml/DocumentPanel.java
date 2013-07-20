@@ -9,12 +9,21 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeNode;
+
 import org.pathvisio.core.ApplicationEvent;
 import org.pathvisio.core.ApplicationEvent.Type;
 import org.pathvisio.core.Engine;
 import org.pathvisio.core.Engine.ApplicationEventListener;
 import org.pathvisio.gui.SwingEngine;
+import org.sbml.jsbml.Annotation;
+import org.sbml.jsbml.Model;
 import org.sbml.jsbml.SBMLDocument;
+import org.sbml.jsbml.util.filters.Filter;
+import org.sbml.jsbml.util.filters.NameFilter;
 
 public class DocumentPanel extends JPanel implements ApplicationEventListener {
 	private SwingEngine eng;
@@ -66,7 +75,11 @@ public class DocumentPanel extends JPanel implements ApplicationEventListener {
 				SwingUtilities.invokeLater(new Runnable() {
 					public void run() {
 						remove(pp);
-						pp = new JScrollPane(new JTree(SBMLFormat.doc));
+						JTree me = new JTree();
+						TreeModel se = new NavigationTree(SBMLFormat.doc)
+								.getTreeModel();
+						me.setModel(se);
+						pp = new JScrollPane(me);
 						add(pp);
 					}
 				});
