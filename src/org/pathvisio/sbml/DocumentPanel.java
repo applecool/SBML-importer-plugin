@@ -4,26 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreeNode;
-
 import org.pathvisio.core.ApplicationEvent;
 import org.pathvisio.core.ApplicationEvent.Type;
 import org.pathvisio.core.Engine;
 import org.pathvisio.core.Engine.ApplicationEventListener;
 import org.pathvisio.gui.SwingEngine;
-import org.sbml.jsbml.Annotation;
-import org.sbml.jsbml.Model;
 import org.sbml.jsbml.SBMLDocument;
-import org.sbml.jsbml.util.filters.Filter;
-import org.sbml.jsbml.util.filters.NameFilter;
 
 public class DocumentPanel extends JPanel implements ApplicationEventListener {
 	private SwingEngine eng;
@@ -76,8 +67,8 @@ public class DocumentPanel extends JPanel implements ApplicationEventListener {
 					public void run() {
 						remove(treePane);
 						JTree elementTree = new JTree();
-						TreeModel elementModel = new NavigationTree(SBMLFormat.doc)
-								.getTreeModel();
+						TreeModel elementModel = new NavigationTree(
+								SBMLFormat.doc).getTreeModel();
 						elementTree.setModel(elementModel);
 						treePane = new JScrollPane(elementTree);
 						add(treePane);
