@@ -37,7 +37,7 @@ public class NavigationTree {
 	public NavigationTree() {
 		this.objectMap = new HashMap();
 		this.objectPathMap = new HashMap();
-		
+
 		this.treeModel = new DefaultTreeModel(
 				new DefaultMutableTreeNode("sbml"));
 	}
@@ -52,7 +52,7 @@ public class NavigationTree {
 		addListOfCompartmentsToTreeModel(top, model.getListOfCompartments());
 		addListOfSpeciesToTreeModel(top, model.getListOfSpecies());
 		addListOfReactionsToTreeModel(top, model.getListOfReactions());
-		
+
 	}
 
 	public NamedSBase getNamedSBaseById(String id) {
@@ -80,7 +80,6 @@ public class NavigationTree {
 		addListOfNamedSBaseToTreeModel(top, createTreeNodeForName("Reactions"),
 				reactionList);
 	}
-
 
 	private void addListOfNamedSBaseToTreeModel(DefaultMutableTreeNode top,
 			DefaultMutableTreeNode category,
