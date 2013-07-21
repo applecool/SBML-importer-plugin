@@ -21,9 +21,6 @@ public class NavigationTree {
 	public static final String COMPARTMENTS = "Compartments";
 	public static final String SPECIES = "Species";
 	public static final String REACTIONS = "Reactions";
-	public static final String QUALITATIVE_SPECIES = "QualitativeSpecies";
-	public static final String TRANSITIONS = "Transitions";
-	private boolean SBMLNetwork;
 	private Map<String, NamedSBase> objectMap;
 	private Map<String, TreePath> objectPathMap;
 	private DefaultTreeModel treeModel;
@@ -40,14 +37,10 @@ public class NavigationTree {
 		return this.treeModel;
 	}
 
-	public boolean isSBMLNetwork() {
-		return this.SBMLNetwork;
-	}
-
 	public NavigationTree() {
 		this.objectMap = new HashMap();
 		this.objectPathMap = new HashMap();
-		this.SBMLNetwork = false;
+		
 		this.treeModel = new DefaultTreeModel(
 				new DefaultMutableTreeNode("sbml"));
 	}
@@ -57,20 +50,12 @@ public class NavigationTree {
 
 		Model model = document.getModel();
 		String modelName = getModelNameFromModel(model);
-		this.SBMLNetwork = true;
-
 		DefaultMutableTreeNode top = new DefaultMutableTreeNode(modelName);
 		this.treeModel = new DefaultTreeModel(top);
 		addListOfCompartmentsToTreeModel(top, model.getListOfCompartments());
 		addListOfSpeciesToTreeModel(top, model.getListOfSpecies());
 		addListOfReactionsToTreeModel(top, model.getListOfReactions());
-		QualitativeModel qModel = (QualitativeModel) model
-				.getExtension("http://www.sbml.org/sbml/level3/version1/qual/version1");
-		if (qModel != null) {
-			addListOfQualitativeSpeciesToTreeModel(top,
-					qModel.getListOfQualitativeSpecies());
-			addListOfTransitionsToTreeModel(top, qModel.getListOfTransitions());
-		}
+		
 	}
 
 	public NamedSBase getNamedSBaseById(String id) {
@@ -99,19 +84,6 @@ public class NavigationTree {
 				reactionList);
 	}
 
-	private void addListOfQualitativeSpeciesToTreeModel(
-			DefaultMutableTreeNode top,
-			ListOf<QualitativeSpecies> qualitativeSpeciesList) {
-		addListOfNamedSBaseToTreeModel(top,
-				createTreeNodeForName("QualitativeSpecies"),
-				qualitativeSpeciesList);
-	}
-
-	private void addListOfTransitionsToTreeModel(DefaultMutableTreeNode top,
-			ListOf<Transition> transitionList) {
-		addListOfNamedSBaseToTreeModel(top,
-				createTreeNodeForName("Transitions"), transitionList);
-	}
 
 	private void addListOfNamedSBaseToTreeModel(DefaultMutableTreeNode top,
 			DefaultMutableTreeNode category,
