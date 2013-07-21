@@ -13,9 +13,6 @@ import org.sbml.jsbml.NamedSBase;
 import org.sbml.jsbml.Reaction;
 import org.sbml.jsbml.SBMLDocument;
 import org.sbml.jsbml.Species;
-import org.sbml.jsbml.ext.qual.QualitativeModel;
-import org.sbml.jsbml.ext.qual.QualitativeSpecies;
-import org.sbml.jsbml.ext.qual.Transition;
 
 public class NavigationTree {
 	public static final String COMPARTMENTS = "Compartments";
