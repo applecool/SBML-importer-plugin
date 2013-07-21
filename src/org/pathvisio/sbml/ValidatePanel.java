@@ -16,6 +16,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -25,6 +26,7 @@ import javax.swing.text.StyledDocument;
 import javax.xml.stream.XMLStreamException;
 
 import org.sbml.jsbml.SBMLDocument;
+import org.sbml.jsbml.SBMLError;
 import org.sbml.jsbml.SBMLReader;
 
 public class ValidatePanel extends JPanel implements ActionListener {
@@ -33,6 +35,7 @@ public class ValidatePanel extends JPanel implements ActionListener {
 	JButton openButton;
 	JButton validateButton;
 	JTextPane textPane;
+
 	StyledDocument doc;
 	final JLabel statusbar = new JLabel(
 			"Output of your selection will appear here", SwingConstants.RIGHT);
@@ -50,6 +53,7 @@ public class ValidatePanel extends JPanel implements ActionListener {
 		fc.setFileFilter(filter);
 
 		textPane = new JTextPane();
+		// textPane.setContentType("text/html");
 		textPane.setEnabled(true);
 		JScrollPane scrollPane = new JScrollPane(textPane);
 		scrollPane.setPreferredSize(new Dimension(500, 400));
@@ -93,7 +97,9 @@ public class ValidatePanel extends JPanel implements ActionListener {
 		outputPanel.setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createTitledBorder("Output Pane"),
 				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+
 		outputPanel.add(scrollPane);
+
 		add(outputPanel, BorderLayout.SOUTH);
 	}
 
@@ -117,6 +123,7 @@ public class ValidatePanel extends JPanel implements ActionListener {
 		else if (e.getSource() == validateButton) {
 
 			validate();
+
 		}
 
 	}
@@ -141,7 +148,9 @@ public class ValidatePanel extends JPanel implements ActionListener {
 			e.printStackTrace();
 		}
 		stop = System.currentTimeMillis();
+
 		textPane.setText("");
+
 		if (document.getErrorCount() > 0) {
 			textPane.setText("Encountered the following errors while reading the SBML file:\n");
 			document.printErrors(System.out);
@@ -149,36 +158,48 @@ public class ValidatePanel extends JPanel implements ActionListener {
 		} else {
 			long errors = document.checkConsistency();
 			long size = new File(selectFile).length();
-			append("File Information: \n");
-			append("            filename: " + selectFile + "\n");
-			append("           file size: " + size + "\n");
-			append("      read time (ms): " + (stop - start) + "\n");
-			append(" validation error(s): " + errors + "\n");
+			System.out.println("File Information: \n");
+			System.out.println("            filename: " + selectFile + "\n");
+			System.out.println("           file size: " + size + "\n");
+			System.out
+					.println("      read time (ms): " + (stop - start) + "\n");
+
+			append("validation error(s): " + errors + "\n", Color.RED);
+
 			if (errors > 0) {
 
-				append("\nFollowing errors were encountered while reading the SBML File:\n");
+				append("\nFollowing errors were encountered while reading the SBML File:\n\n",
+						Color.BLACK);
 				for (int i = 0; i < errors; i++) {
-					String validationError = document.getError(i).toString();
+					String mainError = document.getError(i).toString();
+					SBMLError validationError = document.getError(i);
 
-					String[] str1 = validationError.split("excerpt", 2);
-					String[] str2 = validationError.split("message", 2);
-					append(str1[0]);
-					append(str2[1]);
+					append("" + validationError.getCategory(), Color.BLACK);
+					append(" (" + validationError.getSeverity() + ")" + "\n\n",
+							Color.BLACK);
+					append("" + validationError.getShortMessage() + "\n\n",
+							Color.BLACK);
+					append("Line:" + validationError.getLine(), Color.RED);
+					append("" + validationError.getMessage() + "\n\n",
+							Color.BLUE);
+
+					System.out.println("main error is :" + mainError);
+
 				}
 			} else {
 
-				append("There are no errors in the file\n");
+				append("There are no errors in the file\n", Color.BLACK);
+
 			}
 		}
 
 	}
 
-	public void append(String s) {
-
+	public void append(String s, Color c) {
 		doc = textPane.getStyledDocument();
 		SimpleAttributeSet keyword = new SimpleAttributeSet();
-		StyleConstants.setForeground(keyword, Color.RED);
-		StyleConstants.setBackground(keyword, Color.YELLOW);
+		StyleConstants.setForeground(keyword, c);
+
 		StyleConstants.setBold(keyword, true);
 		try {
 
