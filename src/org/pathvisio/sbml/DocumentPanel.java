@@ -31,15 +31,15 @@ public class DocumentPanel extends JPanel implements ApplicationEventListener {
 	private SBMLDocument lastImported = null;
 	Engine engine;
 	Desktop desktop;
-	private JScrollPane pp = new JScrollPane();
+	private JScrollPane treePane = new JScrollPane();
 	private ExecutorService executor;
 
 	public DocumentPanel(SwingEngine eng) {
 		// TODO Auto-generated constructor stub
 		this.eng = eng;
 		setLayout(new BorderLayout());
-		pp = new JScrollPane(new JTree(SBMLFormat.doc));
-		add(pp);
+		treePane = new JScrollPane(new JTree(SBMLFormat.doc));
+		add(treePane);
 		eng.getEngine().addApplicationEventListener(this);
 		executor = Executors.newSingleThreadExecutor();
 	}
@@ -74,13 +74,13 @@ public class DocumentPanel extends JPanel implements ApplicationEventListener {
 
 				SwingUtilities.invokeLater(new Runnable() {
 					public void run() {
-						remove(pp);
+						remove(treePane);
 						JTree me = new JTree();
 						TreeModel se = new NavigationTree(SBMLFormat.doc)
 								.getTreeModel();
 						me.setModel(se);
-						pp = new JScrollPane(me);
-						add(pp);
+						treePane = new JScrollPane(me);
+						add(treePane);
 					}
 				});
 			}
