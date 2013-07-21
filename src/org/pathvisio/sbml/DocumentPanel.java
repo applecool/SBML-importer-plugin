@@ -75,11 +75,11 @@ public class DocumentPanel extends JPanel implements ApplicationEventListener {
 				SwingUtilities.invokeLater(new Runnable() {
 					public void run() {
 						remove(treePane);
-						JTree me = new JTree();
+						JTree elementTree = new JTree();
 						TreeModel se = new NavigationTree(SBMLFormat.doc)
 								.getTreeModel();
-						me.setModel(se);
-						treePane = new JScrollPane(me);
+						elementTree.setModel(se);
+						treePane = new JScrollPane(elementTree);
 						add(treePane);
 					}
 				});
