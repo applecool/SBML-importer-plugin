@@ -52,7 +52,6 @@ public class ValidatePanel extends JPanel implements ActionListener {
 		fc.setFileFilter(filter);
 
 		textPane = new JTextPane();
-		// textPane.setContentType("text/html");
 		textPane.setEnabled(true);
 		JScrollPane scrollPane = new JScrollPane(textPane);
 		scrollPane.setPreferredSize(new Dimension(500, 400));
