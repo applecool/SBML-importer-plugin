@@ -22,6 +22,7 @@ import org.pathvisio.core.model.AbstractPathwayFormat;
 import org.pathvisio.core.model.ConverterException;
 import org.pathvisio.core.model.Pathway;
 import org.pathvisio.core.util.RootElementFinder;
+import org.sbml.jsbml.SBMLDocument;
 
 public class SBMLFormat extends AbstractPathwayFormat
 {
