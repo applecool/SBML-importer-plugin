@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: pvplugins-SBML
 Bundle-SymbolicName: pvplugins-SBML
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.0.0
 Export-Package: org.pathvisio.sbml
-Require-Bundle: org.pathvisio.core;bundle-version="2.0.11",
- org.pathvisio.desktop;bundle-version="2.0.11",
- org.pathvisio.gui;bundle-version="2.0.11",
+Require-Bundle: org.pathvisio.core;bundle-version="3.0.0",
+ org.pathvisio.desktop;bundle-version="3.0.0",
+ org.pathvisio.gui;bundle-version="3.0.0",
  org.pathvisio.sbgn;bundle-version="1.0.0",
  org.sbgn;bundle-version="0.2.0",
  com.google.collect;bundle-version="1.0.0"
