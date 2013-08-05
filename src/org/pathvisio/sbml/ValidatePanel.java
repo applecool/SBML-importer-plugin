@@ -50,7 +50,7 @@ public class ValidatePanel extends JPanel implements ActionListener {
 				"SBML(Systems Biology Markup Language) (.sbml,.xml)", "sbml",
 				"xml");
 		fc.setFileFilter(filter);
-
+		//create a new text pane 
 		textPane = new JTextPane();
 		textPane.setEnabled(true);
 		JScrollPane scrollPane = new JScrollPane(textPane);
