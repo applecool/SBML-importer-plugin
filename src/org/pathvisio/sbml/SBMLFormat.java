@@ -40,7 +40,11 @@ public class SBMLFormat extends AbstractPathwayFormat
 	{
 		SbmlImportHelper helper = new SbmlImportHelper();
 		Pathway result = helper.doImport(file);
-		if (parent != null) parent.setLastImported(helper.getDocument());
+		if (parent != null)
+			{
+			parent.setLastImported(helper.getDocument());
+			doc=helper.getDocument();
+			}
 		return result;
 		
 	}
