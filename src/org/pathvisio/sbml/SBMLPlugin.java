@@ -69,7 +69,7 @@ public class SBMLPlugin implements Plugin {
 	 * 
 	 * When the button is clicked, a dialog box is opened where an
 	 * SBML file can be chosen to validate.
-	 * @author ShellZero
+	 * @author applecool
 	 *
 	 */
 	private class MyToolbarAction extends AbstractAction {
@@ -97,7 +97,7 @@ public class SBMLPlugin implements Plugin {
 	 * Works properly only with three data nodes. Doesn't work with process nodes.
 	 * This method is added just to experiment with FR Layout algorithm.
 	 * 
-	 * @author ShellZero
+	 * @author applecool
 	 *
 	 */
 	private class MyToolbarAction2 extends AbstractAction {
