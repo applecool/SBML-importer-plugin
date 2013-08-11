@@ -43,6 +43,7 @@ public class SBMLFormat extends AbstractPathwayFormat
 		if (parent != null)
 			{
 			parent.setLastImported(helper.getDocument());
+			//sets the doc to the current imported document.
 			doc=helper.getDocument();
 			}
 		return result;
