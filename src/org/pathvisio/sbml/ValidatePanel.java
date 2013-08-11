@@ -28,6 +28,13 @@ import org.sbml.jsbml.SBMLDocument;
 import org.sbml.jsbml.SBMLError;
 import org.sbml.jsbml.SBMLReader;
 
+/**
+ * This class adds the validation functionality.It lets us validate the 
+ * selected SBML file.
+ * 
+ * @author applecool
+ *
+ */
 public class ValidatePanel extends JPanel implements ActionListener {
 
 	JFileChooser fc;
@@ -45,26 +52,29 @@ public class ValidatePanel extends JPanel implements ActionListener {
 		super(new BorderLayout());
 		// create a file chooser
 		fc = new JFileChooser();
-		// filtering the files based on their extensions
+		// filtering the files based on their extensions.
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(
 				"SBML(Systems Biology Markup Language) (.sbml,.xml)", "sbml",
 				"xml");
 		fc.setFileFilter(filter);
-		//create a new text pane 
+		//create a new text pane. 
 		textPane = new JTextPane();
 		textPane.setEnabled(true);
+		//added scroll bars to the text pane.
 		JScrollPane scrollPane = new JScrollPane(textPane);
 		scrollPane.setPreferredSize(new Dimension(500, 400));
 		scrollPane
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane
 				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
+		
+		// buttons displayed in the validation dialog box.
 		openButton = new JButton("Open");
 		validateButton = new JButton("Validate the file");
 		openButton.addActionListener(this);
 		validateButton.addActionListener(this);
-
+		
+		//JPanel for the buttons with the borders.
 		JPanel buttonPanel = new JPanel();
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
@@ -80,11 +90,12 @@ public class ValidatePanel extends JPanel implements ActionListener {
 		buttonPanel.add(openButton);
 		buttonPanel.add(validateButton);
 		buttonPanel.add(statusbar);
-
+		// adding the buttonpanel in the center.
 		add(buttonPanel, BorderLayout.CENTER);
 
 		statusbar.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-
+		
+		//new panel for displaying the output with borders.
 		JPanel outputPanel = new JPanel();
 		GridBagLayout gridbag1 = new GridBagLayout();
 		GridBagConstraints c1 = new GridBagConstraints();
@@ -97,7 +108,7 @@ public class ValidatePanel extends JPanel implements ActionListener {
 				BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
 		outputPanel.add(scrollPane);
-
+		// adding the output panel to the south of the dialog box.
 		add(outputPanel, BorderLayout.SOUTH);
 	}
 
