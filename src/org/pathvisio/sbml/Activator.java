@@ -4,10 +4,19 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.pathvisio.desktop.plugin.Plugin;
 
+/**
+ * This class activates the SBML Plugin
+ * @author ShellZero
+ *
+ */
 public class Activator implements BundleActivator
 {
 	private SBMLPlugin plugin;
 	
+	/**
+	 * This method starts the SBML Plugin
+	 * @exception Exception
+	 */
 	@Override
 	public void start(BundleContext context) throws Exception
 	{
