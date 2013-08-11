@@ -135,6 +135,12 @@ public class SBMLPlugin implements Plugin {
 	public void done() {
 	}
 	
+	/**
+	 * This method is called in the SBMLFormat.java
+	 * This method sets the imported document to the lastImported variable.
+	 * 
+	 * @param document
+	 */
 	public void setLastImported(SBMLDocument document) {
 		lastImported = document;
 
