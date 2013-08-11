@@ -13,7 +13,12 @@ import org.sbml.jsbml.NamedSBase;
 import org.sbml.jsbml.Reaction;
 import org.sbml.jsbml.SBMLDocument;
 import org.sbml.jsbml.Species;
-
+/**
+ * This class helps to visualize the components of the SBML document in the 
+ * tree model format.
+ * @author applecool
+ *
+ */
 public class NavigationTree {
 	public static final String COMPARTMENTS = "Compartments";
 	public static final String SPECIES = "Species";
@@ -41,7 +46,11 @@ public class NavigationTree {
 		this.treeModel = new DefaultTreeModel(
 				new DefaultMutableTreeNode("sbml"));
 	}
-
+	
+	/**
+	 * 
+	 * @param document
+	 */
 	public NavigationTree(SBMLDocument document) {
 		this();
 
@@ -62,25 +71,47 @@ public class NavigationTree {
 		}
 		return nsb;
 	}
-
+	
+	/**
+	 * This method adds the list of components to the tree model.
+	 * 
+	 * @param top
+	 * @param compartmentList
+	 */
 	private void addListOfCompartmentsToTreeModel(DefaultMutableTreeNode top,
 			ListOf<Compartment> compartmentList) {
 		addListOfNamedSBaseToTreeModel(top,
 				createTreeNodeForName("Compartments"), compartmentList);
 	}
-
+	
+	/**
+	 * This method adds the list of species to the tree model.
+	 * @param top
+	 * @param speciesList
+	 */
 	private void addListOfSpeciesToTreeModel(DefaultMutableTreeNode top,
 			ListOf<Species> speciesList) {
 		addListOfNamedSBaseToTreeModel(top, createTreeNodeForName("Species"),
 				speciesList);
 	}
-
+	
+	/**
+	 * This methods adds the list of reactions to the tree model.
+	 * @param top
+	 * @param reactionList
+	 */
 	private void addListOfReactionsToTreeModel(DefaultMutableTreeNode top,
 			ListOf<Reaction> reactionList) {
 		addListOfNamedSBaseToTreeModel(top, createTreeNodeForName("Reactions"),
 				reactionList);
 	}
-
+	
+	/**
+	 * This method adds the list of namedSbase to the tree model.
+	 * @param top
+	 * @param category
+	 * @param namedSBaseList
+	 */
 	private void addListOfNamedSBaseToTreeModel(DefaultMutableTreeNode top,
 			DefaultMutableTreeNode category,
 			ListOf<? extends NamedSBase> namedSBaseList) {
@@ -97,11 +128,22 @@ public class NavigationTree {
 			}
 		}
 	}
-
+	
+	/**
+	 * This method creates a tree node with the name which will be SBML model name in general.
+	 * 
+	 * @param name
+	 * @return
+	 */
 	private DefaultMutableTreeNode createTreeNodeForName(String name) {
 		return new DefaultMutableTreeNode(name, true);
 	}
-
+	
+	/**
+	 * This method gets the name of the model which is imported.
+	 * @param model
+	 * @return name
+	 */
 	private String getModelNameFromModel(Model model) {
 		String name = model.getId();
 		if (name.equals("")) {
