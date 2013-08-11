@@ -16,6 +16,15 @@ import org.pathvisio.core.Engine.ApplicationEventListener;
 import org.pathvisio.gui.SwingEngine;
 import org.sbml.jsbml.SBMLDocument;
 
+/**
+ * This class adds action to the SBML side pane.
+ * 
+ * When there is an active pathway, the side pane displays the components of
+ * the SBML file.
+ * 
+ * @author applecool
+ *
+ */
 public class DocumentPanel extends JPanel implements ApplicationEventListener {
 	private SwingEngine eng;
 	private JPanel drawPanel;
@@ -34,7 +43,11 @@ public class DocumentPanel extends JPanel implements ApplicationEventListener {
 		eng.getEngine().addApplicationEventListener(this);
 		executor = Executors.newSingleThreadExecutor();
 	}
-
+	
+	/**
+	 * This method sets the input as the SBML Document if a new pathway is opened.
+	 * 
+	 */
 	@Override
 	public void applicationEvent(ApplicationEvent e) {
 		// TODO Auto-generated method stub
@@ -48,13 +61,25 @@ public class DocumentPanel extends JPanel implements ApplicationEventListener {
 		}
 
 	}
-
+	
+	/**
+	 * This method is invoked in the applicationEvent if the pathway is new
+	 * or if a new pathway is opened.
+	 *  
+	 * @param doc
+	 */
 	private void setInput(SBMLDocument doc) {
 		// TODO Auto-generated method stub
 		lastImported = doc;
 		doQuery();
 	}
-
+	
+	/**
+	 * This method is invoked by the setInput function.
+	 * 
+	 * This method adds and removes the tree component from the side pane.
+	 * 
+	 */
 	private void doQuery() {
 		// TODO Auto-generated method stub
 
