@@ -6,7 +6,7 @@ import org.pathvisio.desktop.plugin.Plugin;
 
 /**
  * This class activates the SBML Plugin
- * @author ShellZero
+ * @author applecool
  *
  */
 public class Activator implements BundleActivator
