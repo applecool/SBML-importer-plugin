@@ -55,6 +55,7 @@ public class SBMLPlugin implements Plugin {
 		DocumentPanel pane = new DocumentPanel(desktop.getSwingEngine());
 		JTabbedPane sidebarTabbedPane = desktop.getSideBarTabbedPane();
 		sidebarTabbedPane.add("SBML", pane);
+		
 		// add functionality to the pane
 		desktop.getSwingEngine().getEngine().addApplicationEventListener(pane);
 
@@ -62,7 +63,15 @@ public class SBMLPlugin implements Plugin {
 
 	private final MyToolbarAction toolbarAction = new MyToolbarAction();
 	private final MyToolbarAction2 toolbarAction2 = new MyToolbarAction2();
-
+	
+	/**
+	 * This class adds action to the Validate button.
+	 * 
+	 * When the button is clicked, a dialog box is opened where an
+	 * SBML file can be chosen to validate.
+	 * @author ShellZero
+	 *
+	 */
 	private class MyToolbarAction extends AbstractAction {
 
 		MyToolbarAction() {
@@ -81,6 +90,16 @@ public class SBMLPlugin implements Plugin {
 		}
 
 	}
+	
+	/**
+	 * This class adds the action to the Force Directed Layout button.
+	 * 
+	 * Works properly only with three data nodes. Doesn't work with process nodes.
+	 * This method is added just to experiment with FR Layout algorithm.
+	 * 
+	 * @author ShellZero
+	 *
+	 */
 	private class MyToolbarAction2 extends AbstractAction {
 
 		MyToolbarAction2() {
@@ -95,6 +114,7 @@ public class SBMLPlugin implements Plugin {
 		}
 
 	}
+	
 	public static enum PlPreference implements Preference
 	{
 		PL_LAYOUT_FR_ATTRACTION("0.5"),
@@ -114,7 +134,7 @@ public class SBMLPlugin implements Plugin {
 
 	public void done() {
 	}
-
+	
 	public void setLastImported(SBMLDocument document) {
 		lastImported = document;
 
