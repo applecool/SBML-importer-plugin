@@ -50,6 +50,7 @@ public class SBMLPlugin implements Plugin {
 				.addToToolbar(toolbarAction);
 		desktop.getSwingEngine().getApplicationPanel()
 		.addToToolbar(toolbarAction2);
+		desktop.getSwingEngine().getApplicationPanel().addToToolbar(toolbarAction3);
 
 		// add new SBML side pane
 		DocumentPanel pane = new DocumentPanel(desktop.getSwingEngine());
@@ -63,6 +64,7 @@ public class SBMLPlugin implements Plugin {
 
 	private final MyToolbarAction toolbarAction = new MyToolbarAction();
 	private final MyToolbarAction2 toolbarAction2 = new MyToolbarAction2();
+	private final MyToolbarAction3 toolbarAction3 = new MyToolbarAction3();
 	
 	/**
 	 * This class adds action to the Validate button.
@@ -115,6 +117,19 @@ public class SBMLPlugin implements Plugin {
 
 	}
 	
+	private class MyToolbarAction3 extends AbstractAction{
+		
+		MyToolbarAction3(){
+			putValue(NAME, "Biomodels");
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 	public static enum PlPreference implements Preference
 	{
 		PL_LAYOUT_FR_ATTRACTION("0.5"),
