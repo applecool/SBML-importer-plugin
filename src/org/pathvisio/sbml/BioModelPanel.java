@@ -87,7 +87,7 @@ public class  BioModelPanel  extends JPanel
 	
 		pubXref = new JTextField();
 
-		tipLabel = new JLabel("Tip: use Pubmed id or Literature Title (e.g.: '18651794' , 'WikiPathways: pathway editing for the people.')");
+		tipLabel = new JLabel("Tip: use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
 		tipLabel.setFont(new Font("SansSerif", Font.ITALIC, 11));
 		Action searchLiteratureAction = new AbstractAction("searchlit") 
 		{
@@ -101,7 +101,7 @@ public class  BioModelPanel  extends JPanel
 				catch (Exception ex)
 				{
 					JOptionPane.showMessageDialog(BioModelPanel.this,ex.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
-					Logger.log.error("Error searching WikiPathways", ex);
+					Logger.log.error("Error searching Biomodels", ex);
 				}
 			}
 
@@ -129,7 +129,7 @@ public class  BioModelPanel  extends JPanel
 				"Search options"));
 		
 
-		searchOptBox.add(new JLabel("Publication Title/ID"), cc.xy(2, 1));
+		searchOptBox.add(new JLabel("Biomodel name"), cc.xy(2, 1));
 		searchOptBox.add(pubXref, cc.xyw(4, 1, 3));
 		searchOptBox.add(tipLabel,cc.xyw(2, 2,5));
 	
