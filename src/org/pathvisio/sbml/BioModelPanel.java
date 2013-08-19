@@ -212,7 +212,8 @@ public class  BioModelPanel  extends JPanel
 					pk.setTaskName("Searching");
 					String[] results = null;
 					try 
-					{
+					{	
+						//getting the models id by name
 						results = client.getModelsIdByName(query);
 						
 					}
