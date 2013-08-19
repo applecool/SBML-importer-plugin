@@ -279,7 +279,7 @@ public class SBMLPlugin implements Plugin {
 		BioModelsWSClient  client = new BioModelsWSClient();
 		clients.put("http://www.ebi.ac.uk/biomodels-main/services/BioModelsWebServices?wsdl",client);
 			
-		  System.out.println(client.helloBioModels());
+		  //System.out.println(client.helloBioModels());
 
 		
 	}
