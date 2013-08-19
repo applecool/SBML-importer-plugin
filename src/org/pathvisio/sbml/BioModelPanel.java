@@ -209,7 +209,7 @@ public class  BioModelPanel  extends JPanel
 			{
 				protected String[] doInBackground() throws Exception 
 				{
-					pk.setTaskName("Searching");
+					pk.setTaskName("Searching Biomodels");
 					String[] results = null;
 					try 
 					{	
