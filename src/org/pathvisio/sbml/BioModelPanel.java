@@ -58,60 +58,57 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 /**
- *	This class creates the content in the Dialog of the Search 
+ * This class creates the content in the Dialog of the Search
  */
-public class  BioModelPanel  extends JPanel 
-{
+public class BioModelPanel extends JPanel {
 	SBMLPlugin plugin;
 	public static Border etch = BorderFactory.createEtchedBorder();
 	JComboBox clientDropdown;
-	
+
 	JTable resultTable;
-	int i=0;
-	
+	int i = 0;
+
 	private JTextField txtId;
-	
+
 	private JScrollPane resultspane;
-	
+
 	public int flag = 0;
 	private JTextField pubXref;
 
 	private JLabel tipLabel;
 
-	public BioModelPanel(final SBMLPlugin plugin) 
-	{
+	public BioModelPanel(final SBMLPlugin plugin) {
 
 		this.plugin = plugin;
 
 		setLayout(new BorderLayout());
-	
+
 		pubXref = new JTextField();
 
-		tipLabel = new JLabel("Tip: use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
+		tipLabel = new JLabel(
+				"Tip: use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
 		tipLabel.setFont(new Font("SansSerif", Font.ITALIC, 11));
-		Action searchLiteratureAction = new AbstractAction("searchlit") 
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				try 
-				{
-					resultspane.setBorder(BorderFactory.createTitledBorder(etch, "Pathways"));
+		Action searchLiteratureAction = new AbstractAction("searchlit") {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					resultspane.setBorder(BorderFactory.createTitledBorder(
+							etch, "Pathways"));
 					search();
-				} 
-				catch (Exception ex)
-				{
-					JOptionPane.showMessageDialog(BioModelPanel.this,ex.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
+				} catch (Exception ex) {
+					JOptionPane
+							.showMessageDialog(BioModelPanel.this,
+									ex.getMessage(), "Error",
+									JOptionPane.ERROR_MESSAGE);
 					Logger.log.error("Error searching Biomodels", ex);
 				}
 			}
 
 		};
-		
-		
-		
+
 		pubXref.addActionListener(searchLiteratureAction);
 		JPanel searchBox = new JPanel();
-		FormLayout layoutf = new FormLayout("p,3dlu,120px,2dlu,30px,fill:pref:grow,3dlu,fill:pref:grow,3dlu",
+		FormLayout layoutf = new FormLayout(
+				"p,3dlu,120px,2dlu,30px,fill:pref:grow,3dlu,fill:pref:grow,3dlu",
 				"pref, pref, 4dlu, pref, 4dlu, pref");
 		CellConstraints ccf = new CellConstraints();
 
@@ -127,12 +124,11 @@ public class  BioModelPanel  extends JPanel
 		searchOptBox.setLayout(layout);
 		searchOptBox.setBorder(BorderFactory.createTitledBorder(etch,
 				"Search options"));
-		
 
 		searchOptBox.add(new JLabel("Biomodel name"), cc.xy(2, 1));
 		searchOptBox.add(pubXref, cc.xyw(4, 1, 3));
-		searchOptBox.add(tipLabel,cc.xyw(2, 2,5));
-	
+		searchOptBox.add(tipLabel, cc.xyw(2, 2, 5));
+
 		Vector<String> clients = new Vector<String>(plugin.getClients()
 				.keySet());
 		Collections.sort(clients);
@@ -142,8 +138,7 @@ public class  BioModelPanel  extends JPanel
 		clientDropdown.setRenderer(new DefaultListCellRenderer() {
 			public Component getListCellRendererComponent(final JList list,
 					final Object value, final int index,
-					final boolean isSelected, final boolean cellHasFocus)
-			{
+					final boolean isSelected, final boolean cellHasFocus) {
 				String strValue = SBMLPlugin.shortClientName(value.toString());
 				return super.getListCellRendererComponent(list, strValue,
 						index, isSelected, cellHasFocus);
@@ -155,7 +150,7 @@ public class  BioModelPanel  extends JPanel
 		if (plugin.getClients().size() < 2)
 			clientDropdown.setVisible(false);
 		searchBox.add(searchOptBox, ccf.xyw(1, 1, 8));
-		
+
 		add(searchBox, BorderLayout.NORTH);
 
 		// Center contains table model for results
@@ -164,26 +159,27 @@ public class  BioModelPanel  extends JPanel
 
 		add(resultspane, BorderLayout.CENTER);
 
-	
-
 		resultTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					JTable target = (JTable) e.getSource();
 					int row = target.getSelectedRow();
-					
-					try
-					{				
-					
-						ResultTableModel	model = (ResultTableModel) target.getModel();
-						File tmpDir = new File(plugin.getTmpDir(), SBMLPlugin.shortClientName(model.clientName));
+
+					try {
+
+						ResultTableModel model = (ResultTableModel) target
+								.getModel();
+						File tmpDir = new File(plugin.getTmpDir(), SBMLPlugin
+								.shortClientName(model.clientName));
 						tmpDir.mkdirs();
-						plugin.openPathwayWithProgress(plugin.getClients().get(model.clientName),model.getValueAt(row, 0).toString(), 0, tmpDir);
-					
-					}
-					catch (Exception ex) 
-					{
-						JOptionPane.showMessageDialog(BioModelPanel.this,ex.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
+						plugin.openPathwayWithProgress(
+								plugin.getClients().get(model.clientName),
+								model.getValueAt(row, 0).toString(), 0, tmpDir);
+
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(BioModelPanel.this,
+								ex.getMessage(), "Error",
+								JOptionPane.ERROR_MESSAGE);
 						Logger.log.error("Error", ex);
 					}
 				}
@@ -191,41 +187,33 @@ public class  BioModelPanel  extends JPanel
 		});
 	}
 
-	
-
-	private void search() throws RemoteException,InterruptedException, ExecutionException 
-	{
+	private void search() throws RemoteException, InterruptedException,
+			ExecutionException {
 		final String query = pubXref.getText();
 
-		if (!query.isEmpty()) 
-		{
+		if (!query.isEmpty()) {
 			String clientName = clientDropdown.getSelectedItem().toString();
-			final BioModelsWSClient client = plugin.getClients().get(clientName);
-			
+			final BioModelsWSClient client = plugin.getClients()
+					.get(clientName);
+
 			final ProgressKeeper pk = new ProgressKeeper();
-			final ProgressDialog d = new ProgressDialog(JOptionPane.getFrameForComponent(this), "", pk, true, true);
+			final ProgressDialog d = new ProgressDialog(
+					JOptionPane.getFrameForComponent(this), "", pk, true, true);
 			final ArrayList<String> results2 = new ArrayList<String>();
-			SwingWorker<String[], Void> sw = new SwingWorker<String[], Void>() 
-			{
-				protected String[] doInBackground() throws Exception 
-				{
+			SwingWorker<String[], Void> sw = new SwingWorker<String[], Void>() {
+				protected String[] doInBackground() throws Exception {
 					pk.setTaskName("Searching Biomodels");
 					String[] results = null;
-					try 
-					{	
-						//getting the models id by name
+					try {
+						// getting the models id by name
 						results = client.getModelsIdByName(query);
-						
-					}
-					catch (Exception e) 
-					{
+
+					} catch (Exception e) {
 						throw e;
-					} 
-					finally 
-					{
+					} finally {
 						pk.finished();
 					}
-					
+
 					return results;
 				}
 			};
@@ -234,54 +222,42 @@ public class  BioModelPanel  extends JPanel
 			d.setVisible(true);
 
 			resultTable.setModel(new ResultTableModel(sw.get(), clientName));
-			resultTable.setRowSorter(new TableRowSorter(resultTable.getModel()));
-		} 
-		else
-		{
-			JOptionPane.showMessageDialog(null, "Please Enter a Search Query","ERROR", JOptionPane.ERROR_MESSAGE);
+			resultTable
+					.setRowSorter(new TableRowSorter(resultTable.getModel()));
+		} else {
+			JOptionPane.showMessageDialog(null, "Please Enter a Search Query",
+					"ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
-	
-	
-	
-
-	private class ResultTableModel extends AbstractTableModel
-	{
+	private class ResultTableModel extends AbstractTableModel {
 		String[] results;
-		String[] columnNames = new String[] {  "Name" };
+		String[] columnNames = new String[] { "Name" };
 		String clientName;
 
-		public ResultTableModel(String[] results, String clientName) 
-		{
+		public ResultTableModel(String[] results, String clientName) {
 			this.clientName = clientName;
 			this.results = results;
-			
+
 		}
 
-		public int getColumnCount()
-		{
+		public int getColumnCount() {
 			return 1;
 		}
 
-		public int getRowCount() 
-		{
+		public int getRowCount() {
 			return results.length;
 		}
 
-		public Object getValueAt(int rowIndex, int columnIndex) 
-		{
+		public Object getValueAt(int rowIndex, int columnIndex) {
 			String r = results[rowIndex];
-			
+
 			return r;
 		}
 
-		public String getColumnName(int column) 
-		{
+		public String getColumnName(int column) {
 			return columnNames[column];
 		}
 	}
 
-	
-	
 }
