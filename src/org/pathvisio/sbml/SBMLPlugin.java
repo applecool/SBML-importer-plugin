@@ -283,6 +283,7 @@ public class SBMLPlugin implements Plugin {
 
 		
 	}
+	
 	public static enum PlPreference implements Preference
 	{
 		PL_LAYOUT_FR_ATTRACTION("0.5"),
@@ -313,6 +314,7 @@ public class SBMLPlugin implements Plugin {
 		lastImported = document;
 
 	}
+	
 	public File getTmpDir() {
 		// TODO Auto-generated method stub
 		return tmpDir;

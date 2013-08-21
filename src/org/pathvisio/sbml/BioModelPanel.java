@@ -61,6 +61,7 @@ import com.jgoodies.forms.layout.FormLayout;
  * This class creates the content in the Dialog of the Search
  */
 public class BioModelPanel extends JPanel {
+	
 	SBMLPlugin plugin;
 	public static Border etch = BorderFactory.createEtchedBorder();
 	JComboBox clientDropdown;
@@ -87,7 +88,9 @@ public class BioModelPanel extends JPanel {
 
 		tipLabel = new JLabel(
 				"Tip: use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
+		
 		tipLabel.setFont(new Font("SansSerif", Font.ITALIC, 11));
+		
 		Action searchLiteratureAction = new AbstractAction("searchlit") {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -207,6 +210,7 @@ public class BioModelPanel extends JPanel {
 					try {
 						// getting the models id by name
 						results = client.getModelsIdByName(query);
+						
 
 					} catch (Exception e) {
 						throw e;
