@@ -202,7 +202,7 @@ public class BioModelPanel extends JPanel {
 			final ProgressKeeper pk = new ProgressKeeper();
 			final ProgressDialog d = new ProgressDialog(
 					JOptionPane.getFrameForComponent(this), "", pk, true, true);
-			final ArrayList<String> results2 = new ArrayList<String>();
+			//final ArrayList<String> results2 = new ArrayList<String>();
 			SwingWorker<String[], Void> sw = new SwingWorker<String[], Void>() {
 				protected String[] doInBackground() throws Exception {
 					pk.setTaskName("Searching Biomodels");
