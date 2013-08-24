@@ -20,7 +20,10 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
+import org.bridgedb.DataSource;
 import org.bridgedb.Xref;
 import org.pathvisio.core.model.ObjectType;
 import org.pathvisio.core.model.Pathway;
@@ -31,6 +34,7 @@ import org.pathvisio.sbgn.SbgnFormat;
 import org.pathvisio.sbgn.SbgnTemplates;
 import org.sbgn.ArcClazz;
 import org.sbgn.GlyphClazz;
+import org.sbml.jsbml.Annotation;
 import org.sbml.jsbml.CVTerm;
 import org.sbml.jsbml.Model;
 import org.sbml.jsbml.ModifierSpeciesReference;
@@ -313,7 +317,7 @@ public class PeerModel implements PathwayListener
 			double x = xco;
 			double y = yco;
 			PeerReaction pr = PeerReaction.createFromSbml(this, re, x, y);
-			
+		
 			boolean next = true;
 			if (re.getListOfReactants().size() > 0)
 			{
@@ -377,12 +381,29 @@ public class PeerModel implements PathwayListener
 		if (pelt == null)
 		{
 			Species sp = doc.getModel().getSpecies(sId);
+			
 			PeerSpecies sbr = PeerSpecies.createFromSpecies(this, sp, gc);
 			putSpeciesPeer (sId, sbr);
 			pelt = sbr.getSpeciesElement();
 			pelt.setMCenterX(prefX);
 			pelt.setMCenterY(prefY);
 			pelt.setTextLabel(sId);
+			Annotation annotation = doc.getModel().getSpecies(sId).getAnnotation();
+			for (int i = 0; i < annotation.getCVTermCount(); i++) {
+				
+				List<String> li = annotation.getCVTerm(i).getResources();
+				for (String string : li) {
+					String[] de = string.split("org/",2 );
+					String[] xe = de[1].split("/",2);
+					 DataSource ds = DataSource.getByFullName(xe[0]);
+				
+					
+					pelt.setDataSource(ds);
+					pelt.setGeneID(xe[1]);
+					
+				}
+			}
+			
 			pwy.add(pelt);
 		}
 		return pelt;
