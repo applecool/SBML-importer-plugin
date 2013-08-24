@@ -50,8 +50,6 @@ import javax.swing.table.TableRowSorter;
 import org.pathvisio.core.debug.Logger;
 import org.pathvisio.core.util.ProgressKeeper;
 import org.pathvisio.gui.ProgressDialog;
-import org.pathvisio.sbml.SBMLPlugin;
-
 
 import uk.ac.ebi.biomodels.ws.BioModelsWSClient;
 
@@ -76,7 +74,7 @@ public class BioModelPanel extends JPanel {
 
 	public int flag = 0;
 	private JTextField sbmlName;
-
+	private JTextField chebiId;
 	private JLabel tipLabel;
 	private JTextField pubTitId;
 	private JButton search;
@@ -88,9 +86,11 @@ public class BioModelPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		sbmlName = new JTextField();
-
+		chebiId = new JTextField();
 		pubTitId = new JTextField();
-
+		
+		pubTitId.setToolTipText("Use publication name(e.g.:'sbml')");
+		chebiId.setToolTipText("Use Chebi id (e.g.:'24996')");
 		tipLabel = new JLabel(
 				"Tip: use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
 		
@@ -139,9 +139,11 @@ public class BioModelPanel extends JPanel {
 		searchOptBox.add(tipLabel, cc.xyw(2, 2, 5));
 		searchOptBox.add(new JLabel("Publication Title/ID:"), cc.xy(2, 3));
 		searchOptBox.add(pubTitId,cc.xyw(4, 3,3));
+		searchOptBox.add(new JLabel("Chebi ID:"),cc.xy(2, 4));
+		searchOptBox.add(chebiId,cc.xyw(4, 4, 3));
  search= new JButton("search");
  search.addActionListener(searchLiteratureAction);
- searchOptBox.add(search,cc.xyw(4,4,3));
+ searchOptBox.add(search,cc.xyw(4,5,3));
 		Vector<String> clients = new Vector<String>(plugin.getClients()
 				.keySet());
 		Collections.sort(clients);
@@ -204,8 +206,8 @@ public class BioModelPanel extends JPanel {
 			ExecutionException {
 		final String sbmlname = sbmlName.getText();
 		final String sbmlpub = pubTitId.getText();
-
-		if (!(sbmlpub.isEmpty()&&sbmlname.isEmpty())) {
+		final String sbmlchebi = chebiId.getText();
+		if (!(sbmlpub.isEmpty()&&sbmlname.isEmpty()&&sbmlchebi.isEmpty())) {
 			String clientName = clientDropdown.getSelectedItem().toString();
 			final BioModelsWSClient client = plugin.getClients()
 					.get(clientName);
@@ -219,7 +221,7 @@ public class BioModelPanel extends JPanel {
 					pk.setTaskName("Searching Biomodels");
 					String[] results1 = null;
 					String[] results2 = null;
-					
+					String[] results3 = null;
 					try {
 						// getting the models id by name
 						if(!sbmlName.getText().equalsIgnoreCase(""))
@@ -236,6 +238,14 @@ public class BioModelPanel extends JPanel {
 						 for (int i = 0; i < results2.length; i++) {
 								
 								results.add(results2[i]);
+							}
+						}
+						if(!chebiId.getText().equalsIgnoreCase(""))
+						{
+						results3= client.getModelsIdByChEBIId(sbmlchebi);
+						 for (int i = 0; i < results3.length; i++) {
+								
+								results.add(results3[i]);
 							}
 						}
 						
