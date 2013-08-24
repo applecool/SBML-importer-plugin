@@ -96,6 +96,7 @@ public class BioModelPanel extends JPanel {
 		pubTitId.setToolTipText("Use publication name(e.g.:'sbml')");
 		chebiId.setToolTipText("Use Chebi id (e.g.:'24996')");
 		person.setToolTipText("Use person/encoder name (e.g.:'Rainer','Nicolas')");
+		uniprotId.setToolTipText("Use Uniprot id (e.g.:'P04637','P10113')");
 		tipLabel = new JLabel(
 				"Tip: use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
 		
