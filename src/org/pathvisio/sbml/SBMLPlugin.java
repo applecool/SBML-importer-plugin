@@ -253,6 +253,7 @@ public class SBMLPlugin implements Plugin {
 
 	
 	Pathway pw =br.getPathway();
+	
 	File tmp2 = new File(tmpDir2, id + ".xml");
 	pw.writeToXml(tmp2, true);
 
