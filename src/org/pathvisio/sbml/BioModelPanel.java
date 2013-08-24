@@ -77,6 +77,7 @@ public class BioModelPanel extends JPanel {
 	private JTextField sbmlName;
 	private JTextField chebiId;
 	private JLabel tipLabel;
+	private JTextField uniprotId;
 	private JTextField pubTitId;
 	private JButton search;
 	private JTextField person;
@@ -89,6 +90,7 @@ public class BioModelPanel extends JPanel {
 
 		sbmlName = new JTextField();
 		chebiId = new JTextField();
+		uniprotId = new JTextField();
 		pubTitId = new JTextField();
 		person = new JTextField();
 		pubTitId.setToolTipText("Use publication name(e.g.:'sbml')");
@@ -130,7 +132,7 @@ public class BioModelPanel extends JPanel {
 		JPanel searchOptBox = new JPanel();
 		FormLayout layout = new FormLayout(
 				"3dlu,p,3dlu,2dlu,30px,fill:pref:grow,2dlu",
-				"pref, pref, 14dlu, 14dlu, 14dlu, pref");
+				"pref, pref, 14dlu, 14dlu, 14dlu, pref,pref");
 		CellConstraints cc = new CellConstraints();
 
 		searchOptBox.setLayout(layout);
@@ -144,11 +146,13 @@ public class BioModelPanel extends JPanel {
 		searchOptBox.add(pubTitId,cc.xyw(4, 3,3));
 		searchOptBox.add(new JLabel("Chebi ID:"),cc.xy(2, 4));
 		searchOptBox.add(new JLabel("Person:"),cc.xy(2, 5));
+		searchOptBox.add(new JLabel("Uniprot ID:"),cc.xy(2,6));
 		searchOptBox.add(chebiId,cc.xyw(4, 4, 3));
 		searchOptBox.add(person,cc.xyw(4, 5, 3));
+		searchOptBox.add(uniprotId,cc.xyw(4, 6,3));
  search= new JButton("search");
  search.addActionListener(searchLiteratureAction);
- searchOptBox.add(search,cc.xyw(4,6,3));
+ searchOptBox.add(search,cc.xyw(4,7,3));
 		Vector<String> clients = new Vector<String>(plugin.getClients()
 				.keySet());
 		Collections.sort(clients);
