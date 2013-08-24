@@ -217,7 +217,8 @@ public class BioModelPanel extends JPanel {
 		final String sbmlpub = pubTitId.getText();
 		final String sbmlchebi = chebiId.getText();
 		final String sbmlperson = person.getText();
-		if (!(sbmlpub.isEmpty()&&sbmlname.isEmpty()&&sbmlchebi.isEmpty()&&sbmlperson.isEmpty())) {
+		final String sbmluniprot = uniprotId.getText();
+		if (!(sbmlpub.isEmpty()&&sbmlname.isEmpty()&&sbmlchebi.isEmpty()&&sbmlperson.isEmpty()&&sbmluniprot.isEmpty())) {
 			String clientName = clientDropdown.getSelectedItem().toString();
 			final BioModelsWSClient client = plugin.getClients()
 					.get(clientName);
@@ -233,6 +234,7 @@ public class BioModelPanel extends JPanel {
 					String[] results2 = null;
 					String[] results3 = null;
 					String[] results4 = null;
+					String[] results5 = null;
 					try {
 						// getting the models id by name
 						if(!sbmlName.getText().equalsIgnoreCase(""))
@@ -267,7 +269,14 @@ public class BioModelPanel extends JPanel {
 								results.add(results4[i]);
 							}
 						}
-						
+						if(!uniprotId.getText().equalsIgnoreCase(""))
+						{
+						results5= client.getModelsIdByUniprot(sbmluniprot);
+						 for (int i = 0; i < results5.length; i++) {
+								
+								results.add(results5[i]);
+							}
+						}
 
 					} catch (Exception e) {
 						throw e;
