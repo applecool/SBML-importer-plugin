@@ -143,7 +143,7 @@ public class BioModelPanel extends JPanel {
 		searchOptBox.add(new JLabel("Biomodel name:"), cc.xy(2, 1));
 		searchOptBox.add(sbmlName, cc.xyw(4, 1, 3));
 		searchOptBox.add(tipLabel, cc.xyw(2, 2, 5));
-		searchOptBox.add(new JLabel("Publication Title/ID:"), cc.xy(2, 3));
+		searchOptBox.add(new JLabel("Publication Title/ID:"), cc.xy(2, 3));		
 		searchOptBox.add(pubTitId,cc.xyw(4, 3,3));
 		searchOptBox.add(new JLabel("Chebi ID:"),cc.xy(2, 4));
 		searchOptBox.add(new JLabel("Person:"),cc.xy(2, 5));
@@ -229,6 +229,7 @@ public class BioModelPanel extends JPanel {
 					JOptionPane.getFrameForComponent(this), "", pk, true, true);
 			final ArrayList<String> results = new ArrayList<String>();
 			SwingWorker<String[], Void> sw = new SwingWorker<String[], Void>() {
+				
 				protected String[] doInBackground() throws Exception {
 					pk.setTaskName("Searching Biomodels");
 					String[] results1 = null;
@@ -241,42 +242,52 @@ public class BioModelPanel extends JPanel {
 						if(!sbmlName.getText().equalsIgnoreCase(""))
 						{
 						results1 = client.getModelsIdByName(sbmlname);
+						if(results1!=null){
 						 for (int i = 0; i < results1.length; i++) {
 								
 								results.add(results1[i]);
 							}
 						}
+						}
 						if(!pubTitId.getText().equalsIgnoreCase(""))
 						{
 						results2= client.getModelsIdByPublication(sbmlpub);
-						 for (int i = 0; i < results2.length; i++) {
+						if(results2!=null){ 
+						for (int i = 0; i < results2.length; i++) {
 								
 								results.add(results2[i]);
 							}
 						}
+						}
 						if(!chebiId.getText().equalsIgnoreCase(""))
 						{
 						results3= client.getModelsIdByChEBIId(sbmlchebi);
-						 for (int i = 0; i < results3.length; i++) {
+						if(results3!=null){
+						for (int i = 0; i < results3.length; i++) {
 								
 								results.add(results3[i]);
 							}
 						}
+						}
 						if(!person.getText().equalsIgnoreCase(""))
 						{
 						results4= client.getModelsIdByPerson(sbmlperson);
-						 for (int i = 0; i < results4.length; i++) {
+						if(results4!=null){ 
+						for (int i = 0; i < results4.length; i++) {
 								
 								results.add(results4[i]);
 							}
 						}
+						}
 						if(!uniprotId.getText().equalsIgnoreCase(""))
 						{
 						results5= client.getModelsIdByUniprot(sbmluniprot);
-						 for (int i = 0; i < results5.length; i++) {
+						if(results5!=null){ 
+						for (int i = 0; i < results5.length; i++) {
 								
 								results.add(results5[i]);
 							}
+						}
 						}
 
 					} catch (Exception e) {
@@ -287,11 +298,27 @@ public class BioModelPanel extends JPanel {
 					
 					
 					 String[] finalresults = new String[results.size()];
+					 
 						results.toArray(finalresults);
 						
 					return finalresults;
 					
+					
 				}
+				  
+				 protected void done() {
+			           if(!pk.isCancelled())
+			             {
+			              if(results.size()==0)
+			              {
+			                 JOptionPane.showMessageDialog(null,"0 results found");
+			              }
+			             }
+			             else if(pk.isCancelled())
+			             {
+			               pk.finished();
+			             }
+			           }          
 			};
 
 			sw.execute();
