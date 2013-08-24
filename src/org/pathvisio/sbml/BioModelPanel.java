@@ -56,6 +56,7 @@ import uk.ac.ebi.biomodels.ws.BioModelsWSClient;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
+import org.pathvisio.sbml.SBMLPlugin;
 /**
  * This class creates the content in the Dialog of the Search
  */
