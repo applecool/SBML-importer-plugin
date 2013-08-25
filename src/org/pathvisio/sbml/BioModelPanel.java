@@ -141,13 +141,13 @@ public class BioModelPanel extends JPanel {
 				"Search options"));
 
 		searchOptBox.add(new JLabel("Biomodel name:"), cc.xy(2, 1));
-		searchOptBox.add(sbmlName, cc.xyw(4, 1, 3));
-		searchOptBox.add(tipLabel, cc.xyw(2, 2, 5));
-		searchOptBox.add(new JLabel("Publication Title/ID:"), cc.xy(2, 3));		
-		searchOptBox.add(pubTitId,cc.xyw(4, 3,3));
+		searchOptBox.add(tipLabel, cc.xyw(2, 2, 5));					
+		searchOptBox.add(new JLabel("Publication Title/ID:"), cc.xy(2, 3));
 		searchOptBox.add(new JLabel("Chebi ID:"),cc.xy(2, 4));
 		searchOptBox.add(new JLabel("Person:"),cc.xy(2, 5));
 		searchOptBox.add(new JLabel("Uniprot ID:"),cc.xy(2,6));
+		searchOptBox.add(sbmlName, cc.xyw(4, 1, 3));
+		searchOptBox.add(pubTitId,cc.xyw(4, 3,3));
 		searchOptBox.add(chebiId,cc.xyw(4, 4, 3));
 		searchOptBox.add(person,cc.xyw(4, 5, 3));
 		searchOptBox.add(uniprotId,cc.xyw(4, 6,3));
