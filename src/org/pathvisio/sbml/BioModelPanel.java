@@ -81,6 +81,8 @@ public class BioModelPanel extends JPanel {
 	private JTextField pubTitId;
 	private JButton search;
 	private JTextField person;
+	private JTextField goId;
+	private JTextField taxonomyId;
 
 	public BioModelPanel(final SBMLPlugin plugin) {
 
@@ -93,11 +95,14 @@ public class BioModelPanel extends JPanel {
 		uniprotId = new JTextField();
 		pubTitId = new JTextField();
 		person = new JTextField();
+		goId = new JTextField();
+		taxonomyId = new JTextField();
 		sbmlName.setToolTipText("Tip:Use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
 		pubTitId.setToolTipText("Tip:Use publication name(e.g.:'sbml')");
 		chebiId.setToolTipText("Tip:Use Chebi id (e.g.:'24996')");
 		person.setToolTipText("Tip:Use person/encoder name (e.g.:'Rainer','Nicolas')");
 		uniprotId.setToolTipText("Tip:Use Uniprot id (e.g.:'P04637','P10113')");
+		
 		//tipLabel = new JLabel(
 			//	"Tip: use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
 		
@@ -125,7 +130,7 @@ public class BioModelPanel extends JPanel {
 		JPanel searchBox = new JPanel();
 		FormLayout layoutf = new FormLayout(
 				"p,3dlu,120px,2dlu,30px,fill:pref:grow,3dlu,fill:pref:grow,3dlu",
-				"pref, pref, 14dlu, pref, 4dlu, pref");
+				"pref, pref, 14dlu, pref, 4dlu, pref,pref,pref");
 		CellConstraints ccf = new CellConstraints();
 
 		searchBox.setLayout(layoutf);
@@ -134,7 +139,7 @@ public class BioModelPanel extends JPanel {
 		JPanel searchOptBox = new JPanel();
 		FormLayout layout = new FormLayout(
 				"3dlu,p,3dlu,2dlu,30px,fill:pref:grow,2dlu",
-				"pref, pref, 14dlu, 14dlu, 14dlu, pref,pref,pref");
+				"pref, pref, 14dlu, 14dlu, 14dlu, pref,pref,pref,pref,pref");
 		CellConstraints cc = new CellConstraints();
 
 		searchOptBox.setLayout(layout);
@@ -148,14 +153,18 @@ public class BioModelPanel extends JPanel {
 		searchOptBox.add(new JLabel("Chebi ID:"),cc.xy(2, 4));
 		searchOptBox.add(new JLabel("Person:"),cc.xy(2, 5));
 		searchOptBox.add(new JLabel("Uniprot ID:"),cc.xy(2,6));
+		searchOptBox.add(new JLabel("GO ID:"),cc.xy(2,7));
+		searchOptBox.add(new JLabel("Taxonomy ID:"),cc.xy(2,8));
 		searchOptBox.add(sbmlName, cc.xyw(4, 1, 3));
 		searchOptBox.add(pubTitId,cc.xyw(4, 3,3));
 		searchOptBox.add(chebiId,cc.xyw(4, 4, 3));
 		searchOptBox.add(person,cc.xyw(4, 5, 3));
 		searchOptBox.add(uniprotId,cc.xyw(4, 6,3));
+		searchOptBox.add(goId,cc.xyw(4, 7,3));
+		searchOptBox.add(taxonomyId,cc.xyw(4, 8,3));
  search= new JButton("search");
  search.addActionListener(searchLiteratureAction);
- searchOptBox.add(search,cc.xyw(4,7,3));
+ searchOptBox.add(search,cc.xyw(4,9,3));
 		Vector<String> clients = new Vector<String>(plugin.getClients()
 				.keySet());
 		Collections.sort(clients);
@@ -221,7 +230,9 @@ public class BioModelPanel extends JPanel {
 		final String sbmlchebi = chebiId.getText().trim();
 		final String sbmlperson = person.getText().trim();
 		final String sbmluniprot = uniprotId.getText().trim();
-		if (!(sbmlpub.isEmpty()&&sbmlname.isEmpty()&&sbmlchebi.isEmpty()&&sbmlperson.isEmpty()&&sbmluniprot.isEmpty())) {
+		final String sbmlgo = goId.getText().trim();
+		final String sbmltaxonomy = taxonomyId.getText().trim();
+		if (!(sbmlpub.isEmpty()&&sbmlname.isEmpty()&&sbmlchebi.isEmpty()&&sbmlperson.isEmpty()&&sbmluniprot.isEmpty()&&sbmlgo.isEmpty()&&sbmltaxonomy.isEmpty())) {
 			String clientName = clientDropdown.getSelectedItem().toString();
 			final BioModelsWSClient client = plugin.getClients()
 					.get(clientName);
@@ -239,11 +250,14 @@ public class BioModelPanel extends JPanel {
 					String[] results3 = null;
 					String[] results4 = null;
 					String[] results5 = null;
+					String[] results6 = null;
+					String[] results7 = null;
 					try {
 						// getting the models id by name
 						if(!sbmlName.getText().equalsIgnoreCase(""))
 						{
 						results1 = client.getModelsIdByName(sbmlname);
+						
 						if(results1!=null){
 						 for (int i = 0; i < results1.length; i++) {
 								
@@ -288,6 +302,28 @@ public class BioModelPanel extends JPanel {
 						for (int i = 0; i < results5.length; i++) {
 								
 								results.add(results5[i]);
+							}
+						}
+						}
+						if(!goId.getText().equalsIgnoreCase(""))
+						{
+						results6 = client.getModelsIdByGOId(sbmlgo);
+						
+						if(results6!=null){
+						 for (int i = 0; i < results6.length; i++) {
+								
+								results.add(results6[i]);
+							}
+						}
+						}
+						if(!taxonomyId.getText().equalsIgnoreCase(""))
+						{
+						results7 = client.getModelsIdByTaxonomyId(sbmltaxonomy);
+						
+						if(results7!=null){
+						 for (int i = 0; i < results7.length; i++) {
+								
+								results.add(results7[i]);
 							}
 						}
 						}
