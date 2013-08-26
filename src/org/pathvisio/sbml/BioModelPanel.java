@@ -107,7 +107,7 @@ public class BioModelPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					resultspane.setBorder(BorderFactory.createTitledBorder(
-							etch, "Pathways"));
+							etch, "BioModels"));
 					search();
 				} catch (Exception ex) {
 					JOptionPane
