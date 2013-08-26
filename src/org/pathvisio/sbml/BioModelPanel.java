@@ -216,11 +216,11 @@ public class BioModelPanel extends JPanel {
 
 	private void search() throws RemoteException, InterruptedException,
 			ExecutionException {
-		final String sbmlname = sbmlName.getText();
-		final String sbmlpub = pubTitId.getText();
-		final String sbmlchebi = chebiId.getText();
-		final String sbmlperson = person.getText();
-		final String sbmluniprot = uniprotId.getText();
+		final String sbmlname = sbmlName.getText().trim();
+		final String sbmlpub = pubTitId.getText().trim();
+		final String sbmlchebi = chebiId.getText().trim();
+		final String sbmlperson = person.getText().trim();
+		final String sbmluniprot = uniprotId.getText().trim();
 		if (!(sbmlpub.isEmpty()&&sbmlname.isEmpty()&&sbmlchebi.isEmpty()&&sbmlperson.isEmpty()&&sbmluniprot.isEmpty())) {
 			String clientName = clientDropdown.getSelectedItem().toString();
 			final BioModelsWSClient client = plugin.getClients()
