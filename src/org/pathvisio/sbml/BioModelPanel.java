@@ -76,7 +76,7 @@ public class BioModelPanel extends JPanel {
 	public int flag = 0;
 	private JTextField sbmlName;
 	private JTextField chebiId;
-	private JLabel tipLabel;
+	//private JLabel tipLabel;
 	private JTextField uniprotId;
 	private JTextField pubTitId;
 	private JButton search;
@@ -93,14 +93,15 @@ public class BioModelPanel extends JPanel {
 		uniprotId = new JTextField();
 		pubTitId = new JTextField();
 		person = new JTextField();
-		pubTitId.setToolTipText("Use publication name(e.g.:'sbml')");
-		chebiId.setToolTipText("Use Chebi id (e.g.:'24996')");
-		person.setToolTipText("Use person/encoder name (e.g.:'Rainer','Nicolas')");
-		uniprotId.setToolTipText("Use Uniprot id (e.g.:'P04637','P10113')");
-		tipLabel = new JLabel(
-				"Tip: use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
+		sbmlName.setToolTipText("Tip:Use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
+		pubTitId.setToolTipText("Tip:Use publication name(e.g.:'sbml')");
+		chebiId.setToolTipText("Tip:Use Chebi id (e.g.:'24996')");
+		person.setToolTipText("Tip:Use person/encoder name (e.g.:'Rainer','Nicolas')");
+		uniprotId.setToolTipText("Tip:Use Uniprot id (e.g.:'P04637','P10113')");
+		//tipLabel = new JLabel(
+			//	"Tip: use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
 		
-		tipLabel.setFont(new Font("SansSerif", Font.ITALIC, 11));
+		//tipLabel.setFont(new Font("SansSerif", Font.ITALIC, 11));
 		
 		Action searchLiteratureAction = new AbstractAction("searchlit") {
 			public void actionPerformed(ActionEvent e) {
@@ -133,7 +134,7 @@ public class BioModelPanel extends JPanel {
 		JPanel searchOptBox = new JPanel();
 		FormLayout layout = new FormLayout(
 				"3dlu,p,3dlu,2dlu,30px,fill:pref:grow,2dlu",
-				"pref, pref, 14dlu, 14dlu, 14dlu, pref,pref");
+				"pref, pref, 14dlu, 14dlu, 14dlu, pref,pref,pref");
 		CellConstraints cc = new CellConstraints();
 
 		searchOptBox.setLayout(layout);
@@ -141,8 +142,9 @@ public class BioModelPanel extends JPanel {
 				"Search options"));
 
 		searchOptBox.add(new JLabel("Biomodel name:"), cc.xy(2, 1));
-		searchOptBox.add(tipLabel, cc.xyw(2, 2, 5));					
+		//searchOptBox.add(tipLabel, cc.xyw(2, 2, 5));					
 		searchOptBox.add(new JLabel("Publication Title/ID:"), cc.xy(2, 3));
+		//searchOptBox.add(tipLabel,cc.xyw(2, 3, 5));
 		searchOptBox.add(new JLabel("Chebi ID:"),cc.xy(2, 4));
 		searchOptBox.add(new JLabel("Person:"),cc.xy(2, 5));
 		searchOptBox.add(new JLabel("Uniprot ID:"),cc.xy(2,6));
