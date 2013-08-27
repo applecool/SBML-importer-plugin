@@ -163,9 +163,9 @@ public class BioModelPanel extends JPanel {
 		searchOptBox.add(uniprotId,cc.xyw(4, 6,3));
 		searchOptBox.add(goId,cc.xyw(4, 7,3));
 		searchOptBox.add(taxonomyId,cc.xyw(4, 8,3));
- search= new JButton("search");
- search.addActionListener(searchLiteratureAction);
- searchOptBox.add(search,cc.xyw(4,9,3));
+		search= new JButton("search");
+		search.addActionListener(searchLiteratureAction);
+		searchOptBox.add(search,cc.xyw(4,9,3));
 		Vector<String> clients = new Vector<String>(plugin.getClients()
 				.keySet());
 		Collections.sort(clients);
