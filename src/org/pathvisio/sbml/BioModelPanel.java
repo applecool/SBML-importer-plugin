@@ -104,12 +104,9 @@ public class BioModelPanel extends JPanel {
 		uniprotId.setToolTipText("Tip:Use Uniprot id (e.g.:'P04637','P10113')");
 		goId.setToolTipText("Tip:Use GO id (e.g.:'0006915')");
 		taxonomyId.setToolTipText("Tip:Use Taxonomy id (e.g.:'9606')");
-		//tipLabel = new JLabel(
-			//	"Tip: use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
 		
-		//tipLabel.setFont(new Font("SansSerif", Font.ITALIC, 11));
 		
-		Action searchLiteratureAction = new AbstractAction("searchlit") {
+		Action searchBioModelAction = new AbstractAction("searchlit") {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					resultspane.setBorder(BorderFactory.createTitledBorder(
@@ -164,7 +161,7 @@ public class BioModelPanel extends JPanel {
 		searchOptBox.add(goId,cc.xyw(4, 7,3));
 		searchOptBox.add(taxonomyId,cc.xyw(4, 8,3));
 		search= new JButton("search");
-		search.addActionListener(searchLiteratureAction);
+		search.addActionListener(searchBioModelAction);
 		searchOptBox.add(search,cc.xyw(4,9,3));
 		Vector<String> clients = new Vector<String>(plugin.getClients()
 				.keySet());

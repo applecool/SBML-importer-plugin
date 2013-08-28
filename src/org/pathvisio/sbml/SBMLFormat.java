@@ -55,6 +55,7 @@ public class SBMLFormat extends AbstractPathwayFormat
 	{
 		SbmlExportHelper helper = new SbmlExportHelper();
 		helper.doExport(file, pathway);	
+		
 	}
 
 	private static final String[] EXTENSIONS = new String[] { "sbml", "xml" };
