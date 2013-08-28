@@ -249,40 +249,28 @@ public class SBMLPlugin implements Plugin {
 	try {
 		doc = new SBMLReader().readSBML(tmp.getAbsolutePath());
 	
-	PeerModel br = PeerModel.createFromDoc(doc, tmp);			
+		PeerModel br = PeerModel.createFromDoc(doc, tmp);			
+		Pathway pw =br.getPathway();
+		
+		File tmp2 = new File(tmpDir2, id + ".xml");
+		pw.writeToXml(tmp2, true);
 
-	
-	Pathway pw =br.getPathway();
-	
-	File tmp2 = new File(tmpDir2, id + ".xml");
-	pw.writeToXml(tmp2, true);
-
-	Engine engine = desktop.getSwingEngine().getEngine();
-	engine.setWrapper(desktop.getSwingEngine().createWrapper());
-	SBMLFormat.doc=doc;
-	engine.openPathway(tmp2);
-
+		Engine engine = desktop.getSwingEngine().getEngine();
+		engine.setWrapper(desktop.getSwingEngine().createWrapper());
+		SBMLFormat.doc=doc;
+		engine.openPathway(tmp2);
 		
 	} catch (XMLStreamException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-
-		
-		
+	
 	}
 	private void loadClient()  throws MalformedURLException, ServiceException, BioModelsWSException 
 	{
-
-	
-
-		
 		BioModelsWSClient  client = new BioModelsWSClient();
 		clients.put("http://www.ebi.ac.uk/biomodels-main/services/BioModelsWebServices?wsdl",client);
-			
-		  //System.out.println(client.helloBioModels());
-
-		
+				
 	}
 	
 	public static enum PlPreference implements Preference
