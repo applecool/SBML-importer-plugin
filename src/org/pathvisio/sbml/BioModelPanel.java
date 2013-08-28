@@ -62,28 +62,24 @@ import org.pathvisio.sbml.SBMLPlugin;
 public class BioModelPanel extends JPanel {
 	
 	SBMLPlugin plugin;
-	public static Border etch = BorderFactory.createEtchedBorder();
-	JComboBox clientDropdown;
-
-	JTable resultTable;
-	int i = 0;
-
+	
+	public static Border etch = BorderFactory.createEtchedBorder();	
+	private JComboBox clientDropdown;
+	private JTable resultTable;
 	private JScrollPane resultspane;
 
-	public int flag = 0;
 	private JTextField sbmlName;
 	private JTextField chebiId;
 	private JTextField uniprotId;
 	private JTextField pubTitId;
-	private JButton search;
 	private JTextField person;
 	private JTextField goId;
 	private JTextField taxonomyId;
-
+	private JButton search;
+	
 	public BioModelPanel(final SBMLPlugin plugin) {
 
 		this.plugin = plugin;
-
 		setLayout(new BorderLayout());
 
 		sbmlName = new JTextField();
@@ -93,6 +89,7 @@ public class BioModelPanel extends JPanel {
 		person = new JTextField();
 		goId = new JTextField();
 		taxonomyId = new JTextField();
+		
 		sbmlName.setToolTipText("Tip:Use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
 		pubTitId.setToolTipText("Tip:Use publication name(e.g.:'sbml')");
 		chebiId.setToolTipText("Tip:Use Chebi id (e.g.:'24996')");
@@ -113,7 +110,7 @@ public class BioModelPanel extends JPanel {
 							.showMessageDialog(BioModelPanel.this,
 									ex.getMessage(), "Error",
 									JOptionPane.ERROR_MESSAGE);
-					Logger.log.error("Error searching Biomodels", ex);
+					Logger.log.error("Error while searching for Biomodels", ex);
 				}
 			}
 
