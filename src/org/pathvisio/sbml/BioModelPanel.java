@@ -67,8 +67,8 @@ public class BioModelPanel extends JPanel {
 	private JComboBox clientDropdown;
 	private JTable resultTable;
 	private JScrollPane resultspane;
-
-	private JTextField sbmlName;
+	
+	private JTextField bioModelName;
 	private JTextField chebiId;
 	private JTextField uniprotId;
 	private JTextField pubTitId;
@@ -82,7 +82,7 @@ public class BioModelPanel extends JPanel {
 		this.plugin = plugin;
 		setLayout(new BorderLayout());
 
-		sbmlName = new JTextField();
+		bioModelName = new JTextField();
 		chebiId = new JTextField();
 		uniprotId = new JTextField();
 		pubTitId = new JTextField();
@@ -90,7 +90,7 @@ public class BioModelPanel extends JPanel {
 		goId = new JTextField();
 		taxonomyId = new JTextField();
 		
-		sbmlName.setToolTipText("Tip:Use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
+		bioModelName.setToolTipText("Tip:Use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
 		pubTitId.setToolTipText("Tip:Use publication name(e.g.:'sbml')");
 		chebiId.setToolTipText("Tip:Use Chebi id (e.g.:'24996')");
 		person.setToolTipText("Tip:Use person/encoder name (e.g.:'Rainer','Nicolas')");
@@ -146,7 +146,7 @@ public class BioModelPanel extends JPanel {
 		searchOptBox.add(new JLabel("Uniprot ID:"),cc.xy(2,6));
 		searchOptBox.add(new JLabel("GO ID:"),cc.xy(2,7));
 		searchOptBox.add(new JLabel("Taxonomy ID:"),cc.xy(2,8));
-		searchOptBox.add(sbmlName, cc.xyw(4, 1, 3));
+		searchOptBox.add(bioModelName, cc.xyw(4, 1, 3));
 		searchOptBox.add(pubTitId,cc.xyw(4, 3,3));
 		searchOptBox.add(chebiId,cc.xyw(4, 4, 3));
 		searchOptBox.add(person,cc.xyw(4, 5, 3));
@@ -216,7 +216,7 @@ public class BioModelPanel extends JPanel {
 
 	private void search() throws RemoteException, InterruptedException,
 			ExecutionException {
-		final String sbmlname = sbmlName.getText().trim();
+		final String sbmlname = bioModelName.getText().trim();
 		final String sbmlpub = pubTitId.getText().trim();
 		final String sbmlchebi = chebiId.getText().trim();
 		final String sbmlperson = person.getText().trim();
@@ -245,7 +245,7 @@ public class BioModelPanel extends JPanel {
 					String[] results7 = null;
 					try {
 						// getting the models id by name
-						if(!sbmlName.getText().equalsIgnoreCase(""))
+						if(!bioModelName.getText().equalsIgnoreCase(""))
 						{
 						results1 = client.getModelsIdByName(sbmlname);
 						
