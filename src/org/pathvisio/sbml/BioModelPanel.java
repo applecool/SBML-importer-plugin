@@ -18,7 +18,6 @@ package org.pathvisio.sbml;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -69,14 +68,11 @@ public class BioModelPanel extends JPanel {
 	JTable resultTable;
 	int i = 0;
 
-	private JTextField txtId;
-
 	private JScrollPane resultspane;
 
 	public int flag = 0;
 	private JTextField sbmlName;
 	private JTextField chebiId;
-	//private JLabel tipLabel;
 	private JTextField uniprotId;
 	private JTextField pubTitId;
 	private JButton search;
@@ -106,7 +102,7 @@ public class BioModelPanel extends JPanel {
 		taxonomyId.setToolTipText("Tip:Use Taxonomy id (e.g.:'9606')");
 		
 		
-		Action searchBioModelAction = new AbstractAction("searchlit") {
+		Action searchBioModelAction = new AbstractAction("searchBioModels") {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					resultspane.setBorder(BorderFactory.createTitledBorder(
