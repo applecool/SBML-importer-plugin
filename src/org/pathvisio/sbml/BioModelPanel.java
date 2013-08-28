@@ -69,10 +69,10 @@ public class BioModelPanel extends JPanel {
 	private JScrollPane resultspane;
 	
 	private JTextField bioModelName;
-	private JTextField chebiId;
-	private JTextField uniprotId;
 	private JTextField pubTitId;
-	private JTextField person;
+	private JTextField chebiId;
+	private JTextField personName;	
+	private JTextField uniprotId;
 	private JTextField goId;
 	private JTextField taxonomyId;
 	private JButton search;
@@ -86,14 +86,14 @@ public class BioModelPanel extends JPanel {
 		chebiId = new JTextField();
 		uniprotId = new JTextField();
 		pubTitId = new JTextField();
-		person = new JTextField();
+		personName = new JTextField();
 		goId = new JTextField();
 		taxonomyId = new JTextField();
 		
 		bioModelName.setToolTipText("Tip:Use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
 		pubTitId.setToolTipText("Tip:Use publication name(e.g.:'sbml')");
 		chebiId.setToolTipText("Tip:Use Chebi id (e.g.:'24996')");
-		person.setToolTipText("Tip:Use person/encoder name (e.g.:'Rainer','Nicolas')");
+		personName.setToolTipText("Tip:Use person/encoder name (e.g.:'Rainer','Nicolas')");
 		uniprotId.setToolTipText("Tip:Use Uniprot id (e.g.:'P04637','P10113')");
 		goId.setToolTipText("Tip:Use GO id (e.g.:'0006915')");
 		taxonomyId.setToolTipText("Tip:Use Taxonomy id (e.g.:'9606')");
@@ -102,8 +102,7 @@ public class BioModelPanel extends JPanel {
 		Action searchBioModelAction = new AbstractAction("searchBioModels") {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					resultspane.setBorder(BorderFactory.createTitledBorder(
-							etch, "BioModels"));
+					resultspane.setBorder(BorderFactory.createTitledBorder(etch, "BioModels"));
 					search();
 				} catch (Exception ex) {
 					JOptionPane
@@ -134,30 +133,28 @@ public class BioModelPanel extends JPanel {
 		CellConstraints cc = new CellConstraints();
 
 		searchOptBox.setLayout(layout);
-		searchOptBox.setBorder(BorderFactory.createTitledBorder(etch,
-				"Search options"));
+		searchOptBox.setBorder(BorderFactory.createTitledBorder(etch,"Search options"));
 
-		searchOptBox.add(new JLabel("Biomodel name:"), cc.xy(2, 1));
-		//searchOptBox.add(tipLabel, cc.xyw(2, 2, 5));					
+		searchOptBox.add(new JLabel("Biomodel Name:"), cc.xy(2, 1));					
 		searchOptBox.add(new JLabel("Publication Title/ID:"), cc.xy(2, 3));
-		//searchOptBox.add(tipLabel,cc.xyw(2, 3, 5));
 		searchOptBox.add(new JLabel("Chebi ID:"),cc.xy(2, 4));
-		searchOptBox.add(new JLabel("Person:"),cc.xy(2, 5));
+		searchOptBox.add(new JLabel("Person Name:"),cc.xy(2, 5));
 		searchOptBox.add(new JLabel("Uniprot ID:"),cc.xy(2,6));
 		searchOptBox.add(new JLabel("GO ID:"),cc.xy(2,7));
 		searchOptBox.add(new JLabel("Taxonomy ID:"),cc.xy(2,8));
+		
+		search= new JButton("search");
 		searchOptBox.add(bioModelName, cc.xyw(4, 1, 3));
 		searchOptBox.add(pubTitId,cc.xyw(4, 3,3));
 		searchOptBox.add(chebiId,cc.xyw(4, 4, 3));
-		searchOptBox.add(person,cc.xyw(4, 5, 3));
+		searchOptBox.add(personName,cc.xyw(4, 5, 3));
 		searchOptBox.add(uniprotId,cc.xyw(4, 6,3));
 		searchOptBox.add(goId,cc.xyw(4, 7,3));
 		searchOptBox.add(taxonomyId,cc.xyw(4, 8,3));
-		search= new JButton("search");
-		search.addActionListener(searchBioModelAction);
 		searchOptBox.add(search,cc.xyw(4,9,3));
-		Vector<String> clients = new Vector<String>(plugin.getClients()
-				.keySet());
+
+		search.addActionListener(searchBioModelAction);
+		Vector<String> clients = new Vector<String>(plugin.getClients().keySet());
 		Collections.sort(clients);
 
 		clientDropdown = new JComboBox(clients);
@@ -176,14 +173,13 @@ public class BioModelPanel extends JPanel {
 
 		if (plugin.getClients().size() < 2)
 			clientDropdown.setVisible(false);
+		
 		searchBox.add(searchOptBox, ccf.xyw(1, 1, 8));
-
 		add(searchBox, BorderLayout.NORTH);
 
 		// Center contains table model for results
 		resultTable = new JTable();
 		resultspane = new JScrollPane(resultTable);
-
 		add(resultspane, BorderLayout.CENTER);
 
 		resultTable.addMouseListener(new MouseAdapter() {
@@ -216,22 +212,24 @@ public class BioModelPanel extends JPanel {
 
 	private void search() throws RemoteException, InterruptedException,
 			ExecutionException {
+		
 		final String sbmlname = bioModelName.getText().trim();
 		final String sbmlpub = pubTitId.getText().trim();
 		final String sbmlchebi = chebiId.getText().trim();
-		final String sbmlperson = person.getText().trim();
+		final String sbmlperson = personName.getText().trim();
 		final String sbmluniprot = uniprotId.getText().trim();
 		final String sbmlgo = goId.getText().trim();
 		final String sbmltaxonomy = taxonomyId.getText().trim();
+		
 		if (!(sbmlpub.isEmpty()&&sbmlname.isEmpty()&&sbmlchebi.isEmpty()&&sbmlperson.isEmpty()&&sbmluniprot.isEmpty()&&sbmlgo.isEmpty()&&sbmltaxonomy.isEmpty())) {
 			String clientName = clientDropdown.getSelectedItem().toString();
-			final BioModelsWSClient client = plugin.getClients()
-					.get(clientName);
+			final BioModelsWSClient client = plugin.getClients().get(clientName);
 
 			final ProgressKeeper pk = new ProgressKeeper();
 			final ProgressDialog d = new ProgressDialog(
 					JOptionPane.getFrameForComponent(this), "", pk, true, true);
 			final ArrayList<String> results = new ArrayList<String>();
+			
 			SwingWorker<String[], Void> sw = new SwingWorker<String[], Void>() {
 				
 				protected String[] doInBackground() throws Exception {
@@ -276,7 +274,7 @@ public class BioModelPanel extends JPanel {
 							}
 						}
 						}
-						if(!person.getText().equalsIgnoreCase(""))
+						if(!personName.getText().equalsIgnoreCase(""))
 						{
 						results4= client.getModelsIdByPerson(sbmlperson);
 						if(results4!=null){ 
