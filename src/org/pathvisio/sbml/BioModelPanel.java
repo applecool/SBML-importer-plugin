@@ -81,7 +81,7 @@ public class BioModelPanel extends JPanel {
 
 		this.plugin = plugin;
 		setLayout(new BorderLayout());
-
+		// biomodel search terms
 		bioModelName = new JTextField();
 		chebiId = new JTextField();
 		uniprotId = new JTextField();
@@ -89,7 +89,7 @@ public class BioModelPanel extends JPanel {
 		personName = new JTextField();
 		goId = new JTextField();
 		taxonomyId = new JTextField();
-		
+		//tooltips for all the search boxes
 		bioModelName.setToolTipText("Tip:Use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
 		pubTitId.setToolTipText("Tip:Use publication name(e.g.:'sbml')");
 		chebiId.setToolTipText("Tip:Use Chebi id (e.g.:'24996')");
@@ -98,7 +98,7 @@ public class BioModelPanel extends JPanel {
 		goId.setToolTipText("Tip:Use GO id (e.g.:'0006915')");
 		taxonomyId.setToolTipText("Tip:Use Taxonomy id (e.g.:'9606')");
 		
-		
+		//search biomodel action 
 		Action searchBioModelAction = new AbstractAction("searchBioModels") {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -116,7 +116,7 @@ public class BioModelPanel extends JPanel {
 		};
 
 	
-		
+		//layout for the search box in the biomodel panel.
 		JPanel searchBox = new JPanel();
 		FormLayout layoutf = new FormLayout(
 				"p,3dlu,120px,2dlu,30px,fill:pref:grow,3dlu,fill:pref:grow,3dlu",
@@ -134,7 +134,8 @@ public class BioModelPanel extends JPanel {
 
 		searchOptBox.setLayout(layout);
 		searchOptBox.setBorder(BorderFactory.createTitledBorder(etch,"Search options"));
-
+		
+		//labels for all the search boxes.
 		searchOptBox.add(new JLabel("Biomodel Name:"), cc.xy(2, 1));					
 		searchOptBox.add(new JLabel("Publication Title/ID:"), cc.xy(2, 3));
 		searchOptBox.add(new JLabel("Chebi ID:"),cc.xy(2, 4));
@@ -181,7 +182,8 @@ public class BioModelPanel extends JPanel {
 		resultTable = new JTable();
 		resultspane = new JScrollPane(resultTable);
 		add(resultspane, BorderLayout.CENTER);
-
+		
+		//this enables us to open the biomodel with two mouse clicks on the results in the result table.
 		resultTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
@@ -209,10 +211,12 @@ public class BioModelPanel extends JPanel {
 			}
 		});
 	}
-
+	
+	//biomodes search functionality.
 	private void search() throws RemoteException, InterruptedException,
 			ExecutionException {
 		
+		// search terms typed in the search boxes are trimmed and stored in the following respective variables.
 		final String sbmlname = bioModelName.getText().trim();
 		final String sbmlpub = pubTitId.getText().trim();
 		final String sbmlchebi = chebiId.getText().trim();
@@ -242,7 +246,7 @@ public class BioModelPanel extends JPanel {
 					String[] results6 = null;
 					String[] results7 = null;
 					try {
-						// getting the models id by name
+						// getting the models id by name.
 						if(!bioModelName.getText().equalsIgnoreCase(""))
 						{
 						results1 = client.getModelsIdByName(sbmlname);
@@ -254,6 +258,7 @@ public class BioModelPanel extends JPanel {
 							}
 						}
 						}
+						//getting the models id by publication title or id.
 						if(!pubTitId.getText().equalsIgnoreCase(""))
 						{
 						results2= client.getModelsIdByPublication(sbmlpub);
@@ -264,6 +269,7 @@ public class BioModelPanel extends JPanel {
 							}
 						}
 						}
+						//getting models id by chebi id.
 						if(!chebiId.getText().equalsIgnoreCase(""))
 						{
 						results3= client.getModelsIdByChEBIId(sbmlchebi);
@@ -274,6 +280,7 @@ public class BioModelPanel extends JPanel {
 							}
 						}
 						}
+						//getting models id by person or encoder or author name.
 						if(!personName.getText().equalsIgnoreCase(""))
 						{
 						results4= client.getModelsIdByPerson(sbmlperson);
@@ -284,6 +291,7 @@ public class BioModelPanel extends JPanel {
 							}
 						}
 						}
+						//getting models id by uniprot id.
 						if(!uniprotId.getText().equalsIgnoreCase(""))
 						{
 						results5= client.getModelsIdByUniprot(sbmluniprot);
@@ -294,6 +302,7 @@ public class BioModelPanel extends JPanel {
 							}
 						}
 						}
+						//getting models id by go id.
 						if(!goId.getText().equalsIgnoreCase(""))
 						{
 						results6 = client.getModelsIdByGOId(sbmlgo);
@@ -305,6 +314,7 @@ public class BioModelPanel extends JPanel {
 							}
 						}
 						}
+						//getting models id by taxonomy id.
 						if(!taxonomyId.getText().equalsIgnoreCase(""))
 						{
 						results7 = client.getModelsIdByTaxonomyId(sbmltaxonomy);
@@ -359,7 +369,7 @@ public class BioModelPanel extends JPanel {
 					"ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-
+	
 	private class ResultTableModel extends AbstractTableModel {
 		String[] results;
 		String[] columnNames = new String[] { "Name" };
