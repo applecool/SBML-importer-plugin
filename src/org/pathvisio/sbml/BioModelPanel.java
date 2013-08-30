@@ -85,6 +85,7 @@ public class BioModelPanel extends JPanel {
 
 		this.plugin = plugin;
 		setLayout(new BorderLayout());
+		
 		// biomodel search terms
 		bioModelName = new JTextField();
 		chebiId = new JTextField();
@@ -93,6 +94,7 @@ public class BioModelPanel extends JPanel {
 		personName = new JTextField();
 		goId = new JTextField();
 		taxonomyId = new JTextField();
+		
 		//tooltips for all the search boxes
 		bioModelName.setToolTipText("Tip:Use Biomodel name (e.g.:'Tyson1991 - Cell Cycle 6 var')");
 		pubTitId.setToolTipText("Tip:Use publication name(e.g.:'sbml')");
@@ -262,6 +264,7 @@ public class BioModelPanel extends JPanel {
 							}
 						}
 						}
+						
 						//getting the models id by publication title or id.
 						if(!pubTitId.getText().equalsIgnoreCase(""))
 						{
@@ -273,6 +276,7 @@ public class BioModelPanel extends JPanel {
 							}
 						}
 						}
+						
 						//getting models id by chebi id.
 						if(!chebiId.getText().equalsIgnoreCase(""))
 						{
@@ -284,6 +288,7 @@ public class BioModelPanel extends JPanel {
 							}
 						}
 						}
+						
 						//getting models id by person or encoder or author name.
 						if(!personName.getText().equalsIgnoreCase(""))
 						{
@@ -295,6 +300,7 @@ public class BioModelPanel extends JPanel {
 							}
 						}
 						}
+						
 						//getting models id by uniprot id.
 						if(!uniprotId.getText().equalsIgnoreCase(""))
 						{
@@ -306,6 +312,7 @@ public class BioModelPanel extends JPanel {
 							}
 						}
 						}
+						
 						//getting models id by go id.
 						if(!goId.getText().equalsIgnoreCase(""))
 						{
@@ -318,6 +325,7 @@ public class BioModelPanel extends JPanel {
 							}
 						}
 						}
+						
 						//getting models id by taxonomy id.
 						if(!taxonomyId.getText().equalsIgnoreCase(""))
 						{
