@@ -223,15 +223,15 @@ public class BioModelPanel extends JPanel {
 			ExecutionException {
 		
 		// search terms typed in the search boxes are trimmed and stored in the following respective variables.
-		final String sbmlname = bioModelName.getText().trim();
-		final String sbmlpub = pubTitId.getText().trim();
-		final String sbmlchebi = chebiId.getText().trim();
-		final String sbmlperson = personName.getText().trim();
-		final String sbmluniprot = uniprotId.getText().trim();
-		final String sbmlgo = goId.getText().trim();
-		final String sbmltaxonomy = taxonomyId.getText().trim();
+		final String sbmlName = bioModelName.getText().trim();
+		final String sbmlPub = pubTitId.getText().trim();
+		final String sbmlChebi = chebiId.getText().trim();
+		final String sbmlPerson = personName.getText().trim();
+		final String sbmlUniprot = uniprotId.getText().trim();
+		final String sbmlGo = goId.getText().trim();
+		final String sbmlTaxonomy = taxonomyId.getText().trim();
 		
-		if (!(sbmlpub.isEmpty()&&sbmlname.isEmpty()&&sbmlchebi.isEmpty()&&sbmlperson.isEmpty()&&sbmluniprot.isEmpty()&&sbmlgo.isEmpty()&&sbmltaxonomy.isEmpty())) {
+		if (!(sbmlPub.isEmpty()&&sbmlName.isEmpty()&&sbmlChebi.isEmpty()&&sbmlPerson.isEmpty()&&sbmlUniprot.isEmpty()&&sbmlGo.isEmpty()&&sbmlTaxonomy.isEmpty())) {
 			String clientName = clientDropdown.getSelectedItem().toString();
 			final BioModelsWSClient client = plugin.getClients().get(clientName);
 
@@ -255,7 +255,7 @@ public class BioModelPanel extends JPanel {
 						// getting the models id by name.
 						if(!bioModelName.getText().equalsIgnoreCase(""))
 						{
-						results1 = client.getModelsIdByName(sbmlname);
+						results1 = client.getModelsIdByName(sbmlName);
 						
 						if(results1!=null){
 						 for (int i = 0; i < results1.length; i++) {
@@ -268,7 +268,7 @@ public class BioModelPanel extends JPanel {
 						//getting the models id by publication title or id.
 						if(!pubTitId.getText().equalsIgnoreCase(""))
 						{
-						results2= client.getModelsIdByPublication(sbmlpub);
+						results2= client.getModelsIdByPublication(sbmlPub);
 						if(results2!=null){ 
 						for (int i = 0; i < results2.length; i++) {
 								
@@ -280,7 +280,7 @@ public class BioModelPanel extends JPanel {
 						//getting models id by chebi id.
 						if(!chebiId.getText().equalsIgnoreCase(""))
 						{
-						results3= client.getModelsIdByChEBIId(sbmlchebi);
+						results3= client.getModelsIdByChEBIId(sbmlChebi);
 						if(results3!=null){
 						for (int i = 0; i < results3.length; i++) {
 								
@@ -292,7 +292,7 @@ public class BioModelPanel extends JPanel {
 						//getting models id by person or encoder or author name.
 						if(!personName.getText().equalsIgnoreCase(""))
 						{
-						results4= client.getModelsIdByPerson(sbmlperson);
+						results4= client.getModelsIdByPerson(sbmlPerson);
 						if(results4!=null){ 
 						for (int i = 0; i < results4.length; i++) {
 								
@@ -304,7 +304,7 @@ public class BioModelPanel extends JPanel {
 						//getting models id by uniprot id.
 						if(!uniprotId.getText().equalsIgnoreCase(""))
 						{
-						results5= client.getModelsIdByUniprot(sbmluniprot);
+						results5= client.getModelsIdByUniprot(sbmlUniprot);
 						if(results5!=null){ 
 						for (int i = 0; i < results5.length; i++) {
 								
@@ -316,7 +316,7 @@ public class BioModelPanel extends JPanel {
 						//getting models id by go id.
 						if(!goId.getText().equalsIgnoreCase(""))
 						{
-						results6 = client.getModelsIdByGOId(sbmlgo);
+						results6 = client.getModelsIdByGOId(sbmlGo);
 						
 						if(results6!=null){
 						 for (int i = 0; i < results6.length; i++) {
@@ -329,7 +329,7 @@ public class BioModelPanel extends JPanel {
 						//getting models id by taxonomy id.
 						if(!taxonomyId.getText().equalsIgnoreCase(""))
 						{
-						results7 = client.getModelsIdByTaxonomyId(sbmltaxonomy);
+						results7 = client.getModelsIdByTaxonomyId(sbmlTaxonomy);
 						
 						if(results7!=null){
 						 for (int i = 0; i < results7.length; i++) {
