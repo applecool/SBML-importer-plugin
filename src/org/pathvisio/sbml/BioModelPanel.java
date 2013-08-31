@@ -390,6 +390,12 @@ public class BioModelPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * This class creates the result table model
+	 * based on the results.
+	 * @author ShellZero
+	 *
+	 */
 	private class ResultTableModel extends AbstractTableModel {
 		String[] results;
 		String[] columnNames = new String[] { "Name" };
