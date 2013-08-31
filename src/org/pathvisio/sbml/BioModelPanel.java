@@ -62,6 +62,7 @@ import org.pathvisio.sbml.SBMLPlugin;
  * This class enables us to search the bio models by various terms like
  * bio model name,publication title/id,person/encoder name,uniprot id,
  * go id and taxonomy id.
+ * @author applecool
  */
 public class BioModelPanel extends JPanel {
 	
@@ -393,7 +394,7 @@ public class BioModelPanel extends JPanel {
 	/**
 	 * This class creates the result table model
 	 * based on the results.
-	 * @author ShellZero
+	 * @author applecool
 	 *
 	 */
 	private class ResultTableModel extends AbstractTableModel {
