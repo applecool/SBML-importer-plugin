@@ -58,8 +58,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import org.pathvisio.sbml.SBMLPlugin;
 /**
  * This class creates the search panel for searching bio models and
- * content in the Dialog of the Search.
- * This class enables use to search the bio models by various terms like
+ * content in the dialog of the Search.
+ * This class enables us to search the bio models by various terms like
  * bio model name,publication title/id,person/encoder name,uniprot id,
  * go id and taxonomy id.
  */
@@ -189,9 +189,11 @@ public class BioModelPanel extends JPanel {
 		resultspane = new JScrollPane(resultTable);
 		add(resultspane, BorderLayout.CENTER);
 		
-		//this enables us to open the biomodel with two mouse clicks on the results in the result table.
+		//this enables us to import(open) the bio-models with two mouse clicks 
+		//on the results which appear in the result table.
 		resultTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				//double click
 				if (e.getClickCount() == 2) {
 					JTable target = (JTable) e.getSource();
 					int row = target.getSelectedRow();
@@ -218,7 +220,13 @@ public class BioModelPanel extends JPanel {
 		});
 	}
 	
-	//biomodes search functionality.
+	/**
+	 * Search method for - searching bio-models by name,publication title/id,
+	 * person/encoder name,uniprot id,go id and taxonomy id.
+	 * @throws RemoteException
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
 	private void search() throws RemoteException, InterruptedException,
 			ExecutionException {
 		
