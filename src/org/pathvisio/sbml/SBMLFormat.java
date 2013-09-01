@@ -53,8 +53,8 @@ public class SBMLFormat extends AbstractPathwayFormat
 	public void doExport(File file, Pathway pathway)
 		throws ConverterException 
 	{
-		SbmlExportHelper helper = new SbmlExportHelper();
-		helper.doExport(file, pathway);	
+		SbmlExportHelper helper = new SbmlExportHelper(pathway, file);
+		helper.doExport();	
 		
 	}
 
