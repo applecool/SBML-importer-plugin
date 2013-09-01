@@ -2,8 +2,10 @@ package org.pathvisio.sbml;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.jws.WebParam.Mode;
@@ -21,6 +23,7 @@ import org.pathvisio.sbml.peer.PeerModel;
 import org.pathvisio.sbml.peer.PeerSpecies;
 import org.sbgn.ArcClazz;
 import org.sbgn.GlyphClazz;
+import org.sbgn.bindings.Glyph;
 import org.sbml.jsbml.ListOf;
 import org.sbml.jsbml.Model;
 import org.sbml.jsbml.SBMLDocument;
@@ -43,11 +46,13 @@ public class SbmlExportHelper
 	private final Pathway pathway;
 	private final File file;
 	
-
+	private Map<String, String> portmatrix = new HashMap<String,String>();
+	private Map<String, String> reactionmatrix = new HashMap<String,String>();
 	ListOf<SpeciesReference> listOfSpeciesReferences = new ListOf<SpeciesReference>();
 
 	ListOf<Species> listOfSpecies = new ListOf<Species>();
 	private ListOf<org.sbml.jsbml.Reaction> listOfReactions = new ListOf<org.sbml.jsbml.Reaction>();
+
 	SbmlExportHelper (Pathway pathway, File file)
 	{
 		this.pathway = pathway;
@@ -71,10 +76,16 @@ public class SbmlExportHelper
 	//	doComplexChildren();
 	//	linkArcs();
 	//	fixCompartmentRefs();
+		makePorts();
 		for (PathwayElement elt : pathway.getDataObjects())
 		{
+			addSpeciesReferences(elt);
 		
-		addElement(elt);
+		}
+		for (PathwayElement elt : pathway.getDataObjects())
+		{
+			addElement(elt);
+		
 		}
 	SBMLDocument doc= new SBMLDocument();
 	doc.setModel(doModel());
@@ -96,10 +107,22 @@ public class SbmlExportHelper
 	}
 	}
 	
+	public void addSpeciesReferences(PathwayElement elt)
+	{
+		for (Map.Entry<String,String> entry : portmatrix.entrySet()) {
+		   if(entry.getValue().equals(elt.getStartGraphRef()))
+			  reactionmatrix.put(entry.getKey(),elt.getEndGraphRef());//reaction,species
+		   if(entry.getValue().equals(elt.getEndGraphRef()))
+				  reactionmatrix.put(entry.getKey(),elt.getStartGraphRef());//reaction,species
+			   
+				   
+		}
+	}
 	public void addElement(PathwayElement elt)
 	{
 		String sbgnClass = elt.getDynamicProperty(SbgnFormat.PROPERTY_SBGN_CLASS);
-		if (sbgnClass != null)
+		
+		 if (sbgnClass != null)
 		{
 			if (elt.getObjectType() == ObjectType.LINE)
 			{
@@ -110,7 +133,7 @@ public class SbmlExportHelper
 				case PRODUCTION:
 				case CATALYSIS:
 				case STIMULATION:
-					addSpeciesReference (elt);
+				//	addSpeciesReference (elt);
 				}
 			}
 			else
@@ -137,19 +160,38 @@ public class SbmlExportHelper
 				}
 			}
 		}
-		else
-		{
-			// we only handle SBGN elements for now.
-		}
+	
 		
 	}
-	private void addSpeciesReference(PathwayElement elt)
-	{
-		SpeciesReference sr= new SpeciesReference();
-		sr.setId(elt.getGraphId());
 	
-		listOfSpeciesReferences.add(sr);
+	
+	
+	/**
+	 * Creates the Map for each ProcessNode (i.e) Map of each ProcessNode with
+	 * its COnnected line-GraphId, starting Graph Reference,
+	 */
+	protected void makePorts() {
+		int i = 0;
+	
+		for (PathwayElement elt : pathway.getDataObjects())
+		{
+			switch (elt.getObjectType())
+			{
+				case LINE:
+				{
+					// ports have been dealt with already, skip.
+					if ("true".equals (elt.getDynamicProperty(SbgnFormat.PROPERTY_SBGN_IS_PORT)))
+						
+			
+					portmatrix.put(elt.getStartGraphRef(), elt.getMAnchors().get(0).getGraphId());
+		
+				
+					}
+			}
+		}
+
 	}
+	
 
 	private void addSpecies(PathwayElement elt, GlyphClazz gc)
 	{ Species sp= new Species();
@@ -164,9 +206,13 @@ public class SbmlExportHelper
 	{
 		org.sbml.jsbml.Reaction r= new org.sbml.jsbml.Reaction();
 		r.setId(elt.getGraphId());
-		for(int i=0;i<listOfSpeciesReferences.size();i++)
-		if(r.getId().equals(listOfSpeciesReferences.get(i).getId()))
-			r.addReactant(listOfSpeciesReferences.get(i));
+		for (Map.Entry<String,String> entry : reactionmatrix.entrySet()) {
+		if(elt.getGraphId().equals(entry.getKey()))  
+		{
+			r.addReactant(new SpeciesReference(entry.getValue()));
+		}
+		}
+		
 		listOfReactions.add(r);
 	}
 	
@@ -177,8 +223,9 @@ public class SbmlExportHelper
 	{
 		Model model =new Model();
 
-		model.setListOfSpecies(listOfSpecies);
+		
 		model.setListOfReactions(listOfReactions);
+		
 	
 		return model;
 	}
