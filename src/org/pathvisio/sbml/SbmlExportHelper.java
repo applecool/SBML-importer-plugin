@@ -16,6 +16,7 @@ import org.pathvisio.core.model.PathwayElement;
 import org.pathvisio.sbgn.SbgnFormat;
 import org.pathvisio.sbgn.SbgnImportHelper;
 import org.pathvisio.sbgn.SbgnTemplates;
+import org.pathvisio.sbgn.SbgnTemplates.Reaction;
 import org.pathvisio.sbml.peer.PeerModel;
 import org.pathvisio.sbml.peer.PeerSpecies;
 import org.sbgn.ArcClazz;
@@ -26,6 +27,7 @@ import org.sbml.jsbml.SBMLDocument;
 import org.sbml.jsbml.SBMLException;
 import org.sbml.jsbml.SBMLWriter;
 import org.sbml.jsbml.Species;
+import org.sbml.jsbml.SpeciesReference;
 import org.sbml.jsbml.ext.layout.BoundingBox;
 import org.sbml.jsbml.ext.layout.Dimensions;
 import org.sbml.jsbml.ext.layout.ExtendedLayoutModel;
@@ -42,9 +44,10 @@ public class SbmlExportHelper
 	private final File file;
 	
 
-	
+	ListOf<SpeciesReference> listOfSpeciesReferences = new ListOf<SpeciesReference>();
 
 	ListOf<Species> listOfSpecies = new ListOf<Species>();
+	private ListOf<org.sbml.jsbml.Reaction> listOfReactions = new ListOf<org.sbml.jsbml.Reaction>();
 	SbmlExportHelper (Pathway pathway, File file)
 	{
 		this.pathway = pathway;
@@ -126,7 +129,10 @@ public class SbmlExportHelper
 				case SIMPLE_CHEMICAL_MULTIMER:
 				case MACROMOLECULE:
 				case MACROMOLECULE_MULTIMER:
+				{
 					addSpecies (elt, gc);
+					
+				}
 					break;
 				}
 			}
@@ -139,20 +145,29 @@ public class SbmlExportHelper
 	}
 	private void addSpeciesReference(PathwayElement elt)
 	{
-		
+		SpeciesReference sr= new SpeciesReference();
+		sr.setId(elt.getGraphId());
+	
+		listOfSpeciesReferences.add(sr);
 	}
 
 	private void addSpecies(PathwayElement elt, GlyphClazz gc)
 	{ Species sp= new Species();
-	
-		sp.setName(elt.getTextLabel());
+
+		
 		sp.setId(elt.getGraphId());
 		
 		listOfSpecies.add(sp);
+		
 	}
 	private void addReaction(PathwayElement elt)
 	{
-
+		org.sbml.jsbml.Reaction r= new org.sbml.jsbml.Reaction();
+		r.setId(elt.getGraphId());
+		for(int i=0;i<listOfSpeciesReferences.size();i++)
+		if(r.getId().equals(listOfSpeciesReferences.get(i).getId()))
+			r.addReactant(listOfSpeciesReferences.get(i));
+		listOfReactions.add(r);
 	}
 	
 
@@ -163,6 +178,8 @@ public class SbmlExportHelper
 		Model model =new Model();
 
 		model.setListOfSpecies(listOfSpecies);
+		model.setListOfReactions(listOfReactions);
+	
 		return model;
 	}
 
