@@ -24,6 +24,8 @@ import org.pathvisio.sbml.peer.PeerSpecies;
 import org.sbgn.ArcClazz;
 import org.sbgn.GlyphClazz;
 import org.sbgn.bindings.Glyph;
+import org.sbml.jsbml.Annotation;
+import org.sbml.jsbml.CVTerm;
 import org.sbml.jsbml.ListOf;
 import org.sbml.jsbml.Model;
 import org.sbml.jsbml.SBMLDocument;
@@ -198,8 +200,7 @@ public class SbmlExportHelper
 
 		
 		sp.setId(elt.getGraphId());
-		
-		listOfSpecies.add(sp);
+				listOfSpecies.add(sp);
 		
 	}
 	private void addReaction(PathwayElement elt)
@@ -209,7 +210,16 @@ public class SbmlExportHelper
 		for (Map.Entry<String,String> entry : reactionmatrix.entrySet()) {
 		if(elt.getGraphId().equals(entry.getKey()))  
 		{
-			r.addReactant(new SpeciesReference(entry.getValue()));
+			
+			SpeciesReference sr= r.createReactant();
+		sr.setSpecies(new Species(entry.getValue()));
+			
+			/*String[] rn = entry.getKey().split("_", 2);
+			String[] sn=entry.getValue().split("_",2);
+			Annotation an= new Annotation("SpeciesRefernce"+rn[1]+sn[1]);
+		
+			sr.setAnnotation(an);*/
+			
 		}
 		}
 		
@@ -223,9 +233,9 @@ public class SbmlExportHelper
 	{
 		Model model =new Model();
 
-		
-		model.setListOfReactions(listOfReactions);
-		
+		model.setListOfSpecies(listOfSpecies);	
+	model.setListOfReactions(listOfReactions);
+	
 	
 		return model;
 	}
