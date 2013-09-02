@@ -58,11 +58,7 @@ public class SbmlExportHelper
 	SbmlExportHelper (Pathway pathway, File file)
 	{
 		this.pathway = pathway;
-		this.file = file;
-	
-
-		
-		
+		this.file = file;		
 	}
 	
 
@@ -183,8 +179,6 @@ public class SbmlExportHelper
 				{
 					// ports have been dealt with already, skip.
 					if ("true".equals (elt.getDynamicProperty(SbgnFormat.PROPERTY_SBGN_IS_PORT)))
-						
-			
 					portmatrix.put(elt.getStartGraphRef(), elt.getMAnchors().get(0).getGraphId());
 		
 				
@@ -234,7 +228,7 @@ public class SbmlExportHelper
 		Model model =new Model();
 
 		model.setListOfSpecies(listOfSpecies);	
-	model.setListOfReactions(listOfReactions);
+		model.setListOfReactions(listOfReactions);
 	
 	
 		return model;
