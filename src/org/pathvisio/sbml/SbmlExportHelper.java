@@ -157,9 +157,7 @@ public class SbmlExportHelper
 					break;
 				}
 			}
-		}
-	
-		
+		}		
 	}
 	
 	
@@ -190,11 +188,10 @@ public class SbmlExportHelper
 	
 
 	private void addSpecies(PathwayElement elt, GlyphClazz gc)
-	{ Species sp= new Species();
-
-		
+	{ 
+		Species sp= new Species();		
 		sp.setId(elt.getGraphId());
-				listOfSpecies.add(sp);
+		listOfSpecies.add(sp);
 		
 	}
 	private void addReaction(PathwayElement elt)
@@ -206,13 +203,8 @@ public class SbmlExportHelper
 		{
 			
 			SpeciesReference sr= r.createReactant();
-		sr.setSpecies(new Species(entry.getValue()));
+			sr.setSpecies(new Species(entry.getValue()));
 			
-			/*String[] rn = entry.getKey().split("_", 2);
-			String[] sn=entry.getValue().split("_",2);
-			Annotation an= new Annotation("SpeciesRefernce"+rn[1]+sn[1]);
-		
-			sr.setAnnotation(an);*/
 			
 		}
 		}
