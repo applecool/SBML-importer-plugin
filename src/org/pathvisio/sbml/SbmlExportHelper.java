@@ -16,11 +16,7 @@ import org.pathvisio.core.model.ObjectType;
 import org.pathvisio.core.model.Pathway;
 import org.pathvisio.core.model.PathwayElement;
 import org.pathvisio.sbgn.SbgnFormat;
-import org.pathvisio.sbgn.SbgnImportHelper;
-import org.pathvisio.sbgn.SbgnTemplates;
-import org.pathvisio.sbgn.SbgnTemplates.Reaction;
-import org.pathvisio.sbml.peer.PeerModel;
-import org.pathvisio.sbml.peer.PeerSpecies;
+
 import org.sbgn.ArcClazz;
 import org.sbgn.GlyphClazz;
 import org.sbgn.bindings.Glyph;
@@ -33,14 +29,7 @@ import org.sbml.jsbml.SBMLException;
 import org.sbml.jsbml.SBMLWriter;
 import org.sbml.jsbml.Species;
 import org.sbml.jsbml.SpeciesReference;
-import org.sbml.jsbml.ext.layout.BoundingBox;
-import org.sbml.jsbml.ext.layout.Dimensions;
-import org.sbml.jsbml.ext.layout.ExtendedLayoutModel;
-import org.sbml.jsbml.ext.layout.Layout;
-import org.sbml.jsbml.ext.layout.LayoutConstants;
-import org.sbml.jsbml.ext.layout.Point;
-import org.sbml.jsbml.ext.layout.SpeciesGlyph;
-import org.sbml.jsbml.xml.stax.SBMLReader;
+
 
 
 public class SbmlExportHelper
