@@ -97,10 +97,10 @@ public class SbmlExportHelper
 	public void addSpeciesReferences(PathwayElement elt)
 	{
 		for (Map.Entry<String,String> entry : portmatrix.entrySet()) {
-		   if(entry.getValue().equals(elt.getStartGraphRef()))
-			  reactionmatrix.put(entry.getKey(),elt.getEndGraphRef());//reaction,species
-		   if(entry.getValue().equals(elt.getEndGraphRef()))
-				  reactionmatrix.put(entry.getKey(),elt.getStartGraphRef());//reaction,species
+		   if(entry.getKey().equals(elt.getStartGraphRef()))
+			  reactionmatrix.put( entry.getValue()+"-"+elt.getEndGraphRef()+"-1",elt.getEndGraphRef());//reaction,species
+		   if(entry.getKey().equals(elt.getEndGraphRef()))
+				  reactionmatrix.put(entry.getValue()+"-"+elt.getStartGraphRef()+"-2",elt.getStartGraphRef());//reaction,species
 			   
 				   
 		}
@@ -166,7 +166,7 @@ public class SbmlExportHelper
 				{
 					// ports have been dealt with already, skip.
 					if ("true".equals (elt.getDynamicProperty(SbgnFormat.PROPERTY_SBGN_IS_PORT)))
-					portmatrix.put(elt.getStartGraphRef(), elt.getMAnchors().get(0).getGraphId());
+					portmatrix.put(elt.getMAnchors().get(0).getGraphId(),elt.getStartGraphRef());
 		
 				
 					}
@@ -188,14 +188,30 @@ public class SbmlExportHelper
 		org.sbml.jsbml.Reaction r= new org.sbml.jsbml.Reaction();
 		r.setId(elt.getGraphId());
 		for (Map.Entry<String,String> entry : reactionmatrix.entrySet()) {
-		if(elt.getGraphId().equals(entry.getKey()))  
+			
+			String[] s = entry.getKey().split("-",3);
+			if(s[2].equalsIgnoreCase("2"))
+			{
+		if(elt.getGraphId().equals(s[0]))  
 		{
 			
 			SpeciesReference sr= r.createReactant();
-			sr.setSpecies(new Species(entry.getValue()));
+			sr.setSpecies(new Species(s[1]));
 			
 			
 		}
+			}
+			if(s[2].equalsIgnoreCase("1"))
+			{
+		if(elt.getGraphId().equals(s[0]))  
+		{
+			
+			SpeciesReference sr= r.createProduct();
+			sr.setSpecies(new Species(s[1]));
+			
+			
+		}
+			}
 		}
 		
 		listOfReactions.add(r);
