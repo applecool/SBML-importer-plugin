@@ -23,4 +23,5 @@ Bundle-ClassPath: lib/jsbml-1.0-a1-with-dependencies.jar,
  lib/collections-generic-4.01.jar,
  lib/jung-api-2.0.1.jar,
  .,
- lib/biomodels-wslib_standalone-1.21.jar
+ lib/biomodels-wslib_standalone-1.21.jar,
+ lib/prefuse.jar
