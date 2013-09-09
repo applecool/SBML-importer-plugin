@@ -161,8 +161,8 @@ public class SBMLPlugin implements Plugin {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			new FruchtRein(desktop.getSwingEngine());
-
+			//new FruchtRein(desktop.getSwingEngine());
+			new Prefuse(desktop.getSwingEngine(),false);
 		}
 
 	}
