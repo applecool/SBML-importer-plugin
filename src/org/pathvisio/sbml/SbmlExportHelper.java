@@ -51,15 +51,7 @@ public class SbmlExportHelper
 
 	public void doExport() throws ConverterException
 	{
-	
-		//doGlyphs();
-	//	doPorts();
-		//doArcs();
-		//doStates();
-	//	doArcChildren();
-	//	doComplexChildren();
-	//	linkArcs();
-	//	fixCompartmentRefs();
+			
 		makePorts();
 		for (PathwayElement elt : pathway.getDataObjects())
 		{
