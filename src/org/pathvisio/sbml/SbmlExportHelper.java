@@ -19,9 +19,6 @@ import org.pathvisio.sbgn.SbgnFormat;
 
 import org.sbgn.ArcClazz;
 import org.sbgn.GlyphClazz;
-import org.sbgn.bindings.Glyph;
-import org.sbml.jsbml.Annotation;
-import org.sbml.jsbml.CVTerm;
 import org.sbml.jsbml.ListOf;
 import org.sbml.jsbml.Model;
 import org.sbml.jsbml.SBMLDocument;
