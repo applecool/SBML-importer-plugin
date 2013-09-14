@@ -63,14 +63,32 @@ public class Prefuse extends LayoutAbstract{
 			item.location[1] = (float) pe.getMCenterY();
 			nodes.put(pe.getGraphId(),item);
 			f.addItem(item);
+			
 		}
 		
+
+	
 		for (PathwayElement pe: pwyLines){
-			PathwayElement start = pwy.getElementById(pe.getStartGraphRef());
-			PathwayElement end = pwy.getElementById(pe.getEndGraphRef());
-			float springLength = pythagoras(start.getMWidth()/2, start.getMHeight()/2) + pythagoras(end.getMWidth()/2,end.getMHeight()/2);
-			f.addSpring(nodes.get(pe.getStartGraphRef()), nodes.get(pe.getEndGraphRef()), defaultSpringCoefficient, springLength);
+			String start="",end="";
+			if( pwy.getElementById(pe.getStartGraphRef())==null )
+			{
+			 start =(getReaction(pe.getStartGraphRef()));
+			}else{
+			start=pe.getStartGraphRef();
+			}
+			if( pwy.getElementById(pe.getEndGraphRef())==null )
+			{
+				 end =(getReaction(pe.getEndGraphRef()));
+			}
+			else{
+				end=pe.getEndGraphRef();
+			}
+			
+			float springLength = pythagoras(pwy.getElementById(start).getMWidth()/2, pwy.getElementById(start).getMHeight()/2) + pythagoras(pwy.getElementById(end).getMWidth()/2,pwy.getElementById(end).getMHeight()/2);
+			f.addSpring(nodes.get(start), nodes.get(end), defaultSpringCoefficient, springLength);
 		}
+		
+		
 		
 		l.setForceSimulator(f);
 		long timestep = 1000L;
@@ -84,7 +102,9 @@ public class Prefuse extends LayoutAbstract{
 			points.put(e.getKey(), new Point2D.Float(e.getValue().location[0], e.getValue().location[1]));
 		}
 		setLocations(points);
-		drawLines();
+	//	drawStates();
+		//drawLines();
+		
 	}
 	
 	/**
