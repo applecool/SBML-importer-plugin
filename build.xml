@@ -5,13 +5,7 @@
 	<property name="org.pathvisio.sbgn.dir" value="../org.pathvisio.sbgn" />
 	<property name="common.bundles" value="../common-bundles" />
 
-	<!-- embedded jars are embedded in the resulting bundle -->
-	<path id="embed.jars">
-		<fileset dir="lib">
-			<include name="*.jar" />
-		</fileset>
-
-	</path>
+	
 
 	<path id="project.class.path">
 		<fileset dir="${pathvisio.dir}/modules">
@@ -32,8 +26,79 @@
 			<include name="com.springsource.org.jdom-1.1.0.jar" />
 			<include name="org.pathvisio.jgoodies.forms.jar" />
 		</fileset>
+		<fileset dir="lib">
+					<include name="*.jar" />
+				</fileset>
 	</path>
 
-	<import file="${pathvisio.dir}/plugin-common.xml" />
+	<target name="prepare">
+			<mkdir dir="build"/>
+			<mkdir dir="${bundle.dest}"/>
+			<mkdir dir="build/resources"/>
+			<copy toDir="build/resources">
+				<fileset dir="resources">
+					<include name="*"/>
+				</fileset>
+			</copy>
+			<fail message="Can't find ${pathvisio.dir}/modules/org.pathvisio.core.jar, please specify the path to pathvisio with -Dpathvisio.dir=....">
+				<condition>
+					<not><available file="${pathvisio.dir}/modules/org.pathvisio.core.jar"/></not>
+				</condition>
+			</fail>
+		</target>
+
+		<target name="clean">
+			<delete dir="build"/>
+			<delete file="${jar.name}"/>
+		</target>
+
+		<target name="compile" depends="prepare">
+			<echo>Compiling: ${jar.name}</echo>
+			<javac srcdir="src"
+				   includes="**"
+				   destdir="build"
+				   debug="${debug.mode}"
+				   source="1.5">
+	       <classpath refid="project.class.path"/>
+			</javac>
+		</target>
+
+		<target name="jar" depends="compile"> 
+			<echo>Creating JAR: ${jar.name}</echo>
+			<jar jarfile="${jar.name}" manifest="META-INF/MANIFEST.MF">
+			    <fileset dir="build">
+				    <include name="**/*"/>
+				</fileset>
+	     </jar>
+		</target>
+
+		<target name="install" depends="jar"> 
+			<copy toDir="${bundle.dest}" flatten="true">
+				<fileset dir=".">
+					<include name="${jar.name}"/>
+				</fileset>
+				<fileset dir="lib">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="${common.bundles}">
+						<include name="org.sbgn-with-dependencies.jar" />
+						<include name="com.google.collect*.jar" />
+					</fileset>
+					<fileset dir="${org.pathvisio.sbgn.dir}">
+						<include name="dist/org.pathvisio.sbgn.jar" />
+					</fileset>
+					<fileset dir="${pathvisio.dir}/lib">
+						<include name="org.bridgedb.jar" />
+						<include name="felix.jar" />
+						<include name="com.springsource.org.jdom-1.1.0.jar" />
+						<include name="org.pathvisio.jgoodies.forms.jar" />
+					</fileset>
+			</copy>
+			<delete file="${jar.name}"/>
+		</target>
+
+		<target name="dist-clean" depends="clean">
+			<delete dir="${bundle.dest}"/>
+		</target>
 
 </project>
