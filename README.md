@@ -26,6 +26,8 @@ Note: SBML plugin depends on SBGN. Hence while installing the plugin in the Path
 
 Refer: http://plugins.pathvisio.org/sbml2gpml/blog/
 
+Tutorials: http://plugins.pathvisio.org/sbml2gpml/tutorials/
+
 Contact: Anwesha Bohler: pennatula@gmail.com 
 		 Sri Harsha    : kmitharsha@gmail.com
  
