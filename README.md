@@ -6,6 +6,11 @@ It provides a better visualization of the models and layouts in SBML and an expo
 Currently the development of the plugin is in progress.Right now, the plugin does the following:
 - Importing an SBML file into the pathvisio editor.
 - Viewing the elements of an imported SBML model.
+- Biomodel integration - importing the models directly from the bio model database
+- Visualization of the annotations of an imported SBML model.
+- Applying the layout to the imported SBML model.
+- Validation of the SBML models.
+- Exporting the SBML model - round conversion [GPML->SBML] 
 
 The jar file of the SBML plugin can be downloaded from the following link:
 https://app.box.com/s/5kjjbu9s3e40dx4ksbiq
