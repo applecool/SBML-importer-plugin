@@ -13,7 +13,7 @@ Currently the development of the plugin is in progress.Right now, the plugin doe
 - Exporting the SBML model - round conversion [GPML->SBML] 
 
 The jar file of the SBML plugin can be downloaded from the following link:
-https://app.box.com/s/5kjjbu9s3e40dx4ksbiq
+https://app.box.com/s/d39lkuowd2woub3cac4r
 
 Note: SBML plugin depends on SBGN. Hence while installing the plugin in the Pathvisio Editor from the local machine through the plugin manager, first install the SBGN plugin (Plugins -> Plugin Manager)and then install the SBML plugin following the steps below:
 
