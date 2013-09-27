@@ -1,20 +1,17 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: SBML-importer-plugin
-Bundle-SymbolicName: pvplugins-SBML
+Bundle-Name: PathSBML-plugin
+Bundle-SymbolicName: pvplugins-PathSBML
 Bundle-Version: 1.0.0
 Bundle-ClassPath: .,
+ lib/biomodels-wslib_standalone-1.21.jar,
  lib/jsbml-1.0-a1-with-dependencies.jar,
  lib/jsbml-layout-0.9-a1.jar,
  lib/jsbml-qual-2.1-a1.jar,
- lib/org.sbgn-with-dependencies.jar,
  lib/jung-algorithms-2.0.1.jar,
- lib/jung-graph-impl-2.0.1.jar,
- lib/collections-generic-4.01.jar,
  lib/jung-api-2.0.1.jar,
- lib/biomodels-wslib_standalone-1.21.jar,
- lib/prefuse.jar,
- bin/
+ lib/jung-graph-impl-2.0.1.jar,
+ lib/prefuse.jar
 Bundle-Activator: org.pathvisio.sbml.Activator
 Require-Bundle: org.pathvisio.core;bundle-version="3.0.0",
  org.pathvisio.desktop;bundle-version="3.0.0",
@@ -25,3 +22,5 @@ Require-Bundle: org.pathvisio.core;bundle-version="3.0.0",
  org.pathvisio.sbgn;bundle-version="1.0.0"
 Import-Package: org.bridgedb,
  org.osgi.framework;version="1.5.0"
+Export-Package: org.pathvisio.sbml,
+ org.pathvisio.sbml.peer
