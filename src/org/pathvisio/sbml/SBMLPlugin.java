@@ -214,7 +214,7 @@ public class SBMLPlugin implements Plugin {
 			{
 			protected Boolean doInBackground() throws Exception
 			{
-				pk.setTaskName("Opening pathway");
+				pk.setTaskName("Opening biomodel");
 				try 
 				{
 					openPathway(client, id, rev, tmpDir);
