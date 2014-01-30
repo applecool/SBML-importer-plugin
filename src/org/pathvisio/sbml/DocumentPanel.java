@@ -17,20 +17,39 @@
 package org.pathvisio.sbml;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.geom.Rectangle2D;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeSelectionModel;
+
+import org.bridgedb.Xref;
 import org.pathvisio.core.ApplicationEvent;
 import org.pathvisio.core.ApplicationEvent.Type;
 import org.pathvisio.core.Engine;
 import org.pathvisio.core.Engine.ApplicationEventListener;
+import org.pathvisio.core.model.ObjectType;
+import org.pathvisio.core.model.PathwayElement;
+import org.pathvisio.core.view.GeneProduct;
+import org.pathvisio.core.view.Graphics;
+import org.pathvisio.core.view.VPathway;
+import org.pathvisio.core.view.VPathwayElement;
 import org.pathvisio.gui.SwingEngine;
+import org.pathvisio.sbgn.SbgnFormat;
+import org.pathvisio.sbgn.SbgnTemplates;
 import org.sbml.jsbml.SBMLDocument;
+import org.sbml.jsbml.Species;
 
 /**
  * This class adds action to the SBML side pane.
@@ -90,6 +109,54 @@ public class DocumentPanel extends JPanel implements ApplicationEventListener {
 		doQuery();
 	}
 	
+						
+	
+
+	
+	private void highlightResults(PathwayElement pe) {
+		Rectangle2D interestingRect = null;
+	
+		VPathway vpy = eng.getEngine().getActiveVPathway();
+		for (VPathwayElement velt : vpy.getDrawingObjects()) {
+			if (velt instanceof GeneProduct) {
+				GeneProduct gp = (GeneProduct) velt;
+			
+
+					if (pe.equals(gp.getPathwayElement())) {
+						gp.highlight(Color.YELLOW);
+						if (interestingRect == null) {
+							interestingRect = gp.getVBounds();
+						}
+						break;
+					}
+				
+			}
+		}
+		if (interestingRect != null)
+			vpy.getWrapper().scrollTo(interestingRect.getBounds());
+	}		
+	
+	private void unhighLightAll() {
+		Rectangle2D interestingRect = null;
+	
+		VPathway vpy = eng.getEngine().getActiveVPathway();
+		for (VPathwayElement velt : vpy.getDrawingObjects()) {
+			for(PathwayElement pe :eng.getEngine().getActivePathway().getDataObjects())
+			if (velt instanceof GeneProduct) {
+				GeneProduct gp = (GeneProduct) velt;
+			
+
+					if (pe.equals(gp.getPathwayElement())) {
+						gp.unhighlight();
+						
+						break;
+					}
+				
+			}
+		}
+	
+	}		
+			
 	/**
 	 * This method is invoked by the setInput function.
 	 * 
@@ -107,7 +174,23 @@ public class DocumentPanel extends JPanel implements ApplicationEventListener {
 				SwingUtilities.invokeLater(new Runnable() {
 					public void run() {
 						remove(treePane);
-						JTree elementTree = new JTree();
+						final JTree elementTree = new JTree();
+						elementTree.addTreeSelectionListener(new TreeSelectionListener() {
+						    public void valueChanged(TreeSelectionEvent e) {
+						        DefaultMutableTreeNode node = (DefaultMutableTreeNode)
+						        		elementTree.getLastSelectedPathComponent();
+
+						    /* if nothing is selected */ 
+						        if (node == null) return;
+						        
+						       
+						       Species sp= (Species) node.getUserObject();
+						
+						    System.out.println(sp.toString());
+						unhighLightAll();
+						    highlightResults(eng.getEngine().getActivePathway().getElementById(sp.toString()));
+						    
+						    }});
 						TreeModel elementModel = new NavigationTree(
 								SBMLFormat.doc).getTreeModel();
 						elementTree.setModel(elementModel);
